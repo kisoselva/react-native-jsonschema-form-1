@@ -15,6 +15,7 @@
     "test-debug": "cross-env NODE_ENV=test mocha --require @babel/register --require ./test/setup-jsdom.js --debug-brk --inspect test/Form_test.js"
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.2.0",
     "ajv": "^6.10.2",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",

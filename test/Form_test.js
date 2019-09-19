@@ -305,11 +305,11 @@ describeRepeated("Form common", createFormComponent => {
     // });
 
     // it("should pass errors as the provided React component", () => {
-    //   expect(node.querySelectorAll(".error-detail li")).to.have.length.of(1);
+    //   expect(node.querySelectorAll(".error-detail li")).to.have.lengthOf(1);
     // });
 
     // it("should pass rawErrors as an array of strings", () => {
-    //   expect(node.querySelectorAll(".raw-error")).to.have.length.of(1);
+    //   expect(node.querySelectorAll(".raw-error")).to.have.lengthOf(1);
     // });
 
     // it("should pass help as a the provided React element", () => {

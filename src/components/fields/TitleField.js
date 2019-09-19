@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Text } from "react-native";
+
 const REQUIRED_FIELD_SYMBOL = "*";
 
 function TitleField(props) {
   const { id, title, required } = props;
   return (
-    <legend id={id}>
+    <Text id={id}>
       {title}
-      {required && <span className="required">{REQUIRED_FIELD_SYMBOL}</span>}
-    </legend>
+      {required && <Text className="required">{REQUIRED_FIELD_SYMBOL}</Text>}
+    </Text>
   );
 }
 

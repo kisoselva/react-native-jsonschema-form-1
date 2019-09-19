@@ -57,8 +57,10 @@ export function findDOMNode(componentOrNode, isComponent = true) {
   node.tagName = (isComponent ? node.type.name : node.type).toUpperCase();
   
   node.querySelectorAll = tag => node.findAllByType(tagToComponentMap[tag]);
+
+  node.querySelector = tag => node.findByType(tagToComponentMap[tag]);
   
-  node.findByClassName = className => _findAll(node,
+  node.querySelectorAllByClassName = className => _findAll(node,
     instance => !_.isFunction(instance.type)
       && instance.props.className ? instance.props.className.indexOf(className) !== -1 : false,
     { deep: true }

@@ -836,6 +836,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@react-native-community/checkbox@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.2.0.tgz#f0177403500a8f0a58fa159c5731be89cba360f7"
+  integrity sha512-+ZBcOWKpM+6Nb+1RIU5rjTPQ3b60ypxUaMKy+4DsP1ham1WSJOYpDt7NxcP3ZIjqs05ak/8m2MHXHd9s8jz2Jg==
+
 "@react-native-community/cli-platform-android@^2.6.0", "@react-native-community/cli-platform-android@^2.9.0":
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-2.9.0.tgz#28831e61ce565a2c7d1905852fce1eecfd33cb5e"

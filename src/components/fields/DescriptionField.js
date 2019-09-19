@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Text, View } from "react-native";
+
 function DescriptionField(props) {
   const { id, description } = props;
   if (!description) {
@@ -8,15 +10,15 @@ function DescriptionField(props) {
   }
   if (typeof description === "string") {
     return (
-      <p id={id} className="field-description">
+      <Text id={id} className="field-description">
         {description}
-      </p>
+      </Text>
     );
   } else {
     return (
-      <div id={id} className="field-description">
+      <View id={id} className="field-description">
         {description}
-      </div>
+      </View>
     );
   }
 }

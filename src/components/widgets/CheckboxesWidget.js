@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Text, View } from "react-native";
+import CheckBox from '@react-native-community/checkbox';
+
 function selectValue(value, selected, all) {
   const at = all.indexOf(value);
   const updated = selected.slice(0, at).concat(value, selected.slice(at));
@@ -17,7 +20,7 @@ function CheckboxesWidget(props) {
   const { id, disabled, options, value, autofocus, readonly, onChange } = props;
   const { enumOptions, enumDisabled, inline } = options;
   return (
-    <div className="checkboxes" id={id}>
+    <View className="checkboxes" id={id}>
       {enumOptions.map((option, index) => {
         const checked = value.indexOf(option.value) !== -1;
         const itemDisabled =
@@ -25,11 +28,10 @@ function CheckboxesWidget(props) {
         const disabledCls =
           disabled || itemDisabled || readonly ? "disabled" : "";
         const checkbox = (
-          <span>
-            <input
-              type="checkbox"
+          <View>
+            <CheckBox
               id={`${id}_${index}`}
-              checked={checked}
+              value={checked}
               disabled={disabled || itemDisabled || readonly}
               autoFocus={autofocus && index === 0}
               onChange={event => {
@@ -41,20 +43,20 @@ function CheckboxesWidget(props) {
                 }
               }}
             />
-            <span>{option.label}</span>
-          </span>
+            <Text>{option.label}</Text>
+          </View>
         );
         return inline ? (
-          <label key={index} className={`checkbox-inline ${disabledCls}`}>
+          <Text key={index} className={`checkbox-inline ${disabledCls}`}>
             {checkbox}
-          </label>
+          </Text>
         ) : (
-          <div key={index} className={`checkbox ${disabledCls}`}>
+          <View key={index} className={`checkbox ${disabledCls}`}>
             <label>{checkbox}</label>
-          </div>
+          </View>
         );
       })}
-    </div>
+    </View>
   );
 }
 

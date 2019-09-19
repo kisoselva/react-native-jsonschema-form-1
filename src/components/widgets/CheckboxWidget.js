@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import DescriptionField from "../fields/DescriptionField.js";
 
+import { Text, View } from "react-native";
+import CheckBox from '@react-native-community/checkbox';
+
 // Check to see if a schema specifies that a value must be true
 function schemaRequiresTrueValue(schema) {
   // Check if const is a truthy value
@@ -51,15 +54,14 @@ function CheckboxWidget(props) {
   const required = schemaRequiresTrueValue(schema);
 
   return (
-    <div className={`checkbox ${disabled || readonly ? "disabled" : ""}`}>
+    <View className={`checkbox ${disabled || readonly ? "disabled" : ""}`}>
       {schema.description && (
         <DescriptionField description={schema.description} />
       )}
-      <label>
-        <input
-          type="checkbox"
+      <View>
+        <CheckBox
           id={id}
-          checked={typeof value === "undefined" ? false : value}
+          value={typeof value === "undefined" ? false : value}
           required={required}
           disabled={disabled || readonly}
           autoFocus={autofocus}
@@ -67,9 +69,9 @@ function CheckboxWidget(props) {
           onBlur={onBlur && (event => onBlur(id, event.target.checked))}
           onFocus={onFocus && (event => onFocus(id, event.target.checked))}
         />
-        <span>{label}</span>
-      </label>
-    </div>
+        <Text>{label}</Text>
+      </View>
+    </View>
   );
 }
 

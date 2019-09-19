@@ -23,7 +23,7 @@ describe("NullField", () => {
         },
       });
 
-      expect(node.findByClassName("field")).to.have.lengthOf(1);
+      expect(node.querySelectorAllByClassName("field")).to.have.lengthOf(1);
     });
 
     it("should render a null field with a label", () => {
@@ -34,12 +34,13 @@ describe("NullField", () => {
         },
       });
 
-      const field = findDOMNode(node.findByClassName("field")[0], false);
-      const text = field.querySelectorAll("text")[0];
+      const field = findDOMNode(node.querySelectorAllByClassName("field")[0], false);
+      const textComponent = field.querySelectorAll("text")[0];
+      const textContent = textComponent.props.children[0];
 
-      expect(node.findByClassName("field")).to.have.lengthOf(1);
+      expect(node.querySelectorAllByClassName("field")).to.have.lengthOf(1);
       expect(field.querySelectorAll("label")).to.have.lengthOf(1);
-      expect(text.props.children).eql(["foo", false]);
+      expect(textContent).eql("foo");
     });
 
     it("should assign a default value", () => {
