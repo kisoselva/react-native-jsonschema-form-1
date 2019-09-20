@@ -10,7 +10,7 @@ import Form from "../src/components/Form";
 import { Label } from "../src/components/fields/SchemaField";
 import { BaseInput } from "../src/components/widgets/BaseInput";
 import CheckBox from '@react-native-community/checkbox';
-import RadioForm, { RadioButton, RadioButtonLabel } from "react-native-simple-radio-button";
+import RadioForm, { RadioButtonInput, RadioButtonLabel } from "react-native-simple-radio-button";
 
 const map = {
   button: Button,
@@ -20,7 +20,7 @@ const map = {
   input: TextInput,
   label: Label,
   "radio-form": RadioForm,
-  "radio-button": RadioButton,
+  "radio-button-input": RadioButtonInput,
   "radio-button-label": RadioButtonLabel,
   select: Picker,
   text: Text,

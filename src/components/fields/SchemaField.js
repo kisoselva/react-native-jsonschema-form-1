@@ -82,7 +82,7 @@ function LabelInput(props) {
       className="form-control"
       type="text"
       id={id}
-      onBlur={event => onChange(event.target.value)}
+      onBlur={e => onChange(e.nativeEvent.text)}
       value={label}
     />
   );

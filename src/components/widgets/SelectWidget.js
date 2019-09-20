@@ -19,7 +19,7 @@ function processValue(schema, value) {
   } else if (type === "array" && items && nums.has(items.type)) {
     return value.map(asNumber);
   } else if (type === "boolean") {
-    return value === "true";
+    return value === true;
   } else if (type === "number") {
     return asNumber(value);
   }
@@ -30,13 +30,14 @@ function processValue(schema, value) {
     if (schema.enum.every(x => guessType(x) === "number")) {
       return asNumber(value);
     } else if (schema.enum.every(x => guessType(x) === "boolean")) {
-      return value === "true";
+      return value === true;
     }
   }
 
   return value;
 }
 
+// TODO add multiple with react-native-multiple-select
 function getValue(event, multiple) {
   if (multiple) {
     return [].slice
@@ -48,7 +49,6 @@ function getValue(event, multiple) {
   }
 }
 
-// TODO add multiple with react-native-multiple-select
 // TODO style
 function SelectWidget(props) {
   const {
@@ -79,8 +79,9 @@ function SelectWidget(props) {
       required={required}
       enabled={!(disabled || readonly)}
       autoFocus={autofocus}
-      onValueChange={event => {
-        const newValue = getValue(event, multiple);
+      onValueChange={value => {
+        // const newValue = getValue(event, multiple);
+        const newValue = value;
         onChange(processValue(schema, newValue));
       }}>
       {enumOptions.map(({ value, label }, i) => {

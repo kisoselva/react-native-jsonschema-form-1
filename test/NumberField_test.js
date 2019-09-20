@@ -165,36 +165,20 @@ describe("NumberField", () => {
       });
 
       it("should handle a change event", () => {
-        const { node } = createFormComponent({
+        const onChange = sandbox.spy();
+        const { comp, node } = createFormComponent({
           schema: {
             type: "number",
           },
           uiSchema,
-        });
-
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "2" },
-        });
-
-        expect(node.instance.state.formData).eql(2);
-      });
-
-      it("should handle a blur event", () => {
-        const onBlur = sandbox.spy();
-        const { node } = createFormComponent({
-          schema: {
-            type: "number",
-          },
-          uiSchema,
-          onBlur,
+          onChange,
         });
 
         const input = node.querySelector("input");
-        Simulate.blur(input, {
-          target: { value: "2" },
-        });
+        Simulate.changeText(input, 2);
 
-        expect(onBlur.calledWith(input.props.id, 2));
+        expect(onChange.called).to.be.true;
+        expect(node.instance.state.formData).eql(2);
       });
 
       it("should handle a focus event", () => {
@@ -208,11 +192,9 @@ describe("NumberField", () => {
         });
 
         const input = node.querySelector("input");
-        Simulate.focus(input, {
-          target: { value: "2" },
-        });
+        Simulate.focus(input);
 
-        expect(onFocus.calledWith(input.id, 2));
+        expect(onFocus.called).to.be.true;
       });
 
       it("should fill field with data", () => {
@@ -282,9 +264,7 @@ describe("NumberField", () => {
 
         tests.forEach(test => {
           it(`should work with an input value of ${test.input}`, () => {
-            Simulate.change($input, {
-              target: { value: test.input },
-            });
+            Simulate.changeText($input, test.input);
 
             expect(node.instance.state.formData).eql(test.output);
             expect($input.props.value).eql(test.input);
@@ -302,9 +282,7 @@ describe("NumberField", () => {
 
         const $input = node.querySelector("input");
 
-        Simulate.change($input, {
-          target: { value: ".00" },
-        });
+        Simulate.changeText($input, ".00");
 
         expect(node.instance.state.formData).eql(0);
         expect($input.props.value).eql(".00");
@@ -349,24 +327,16 @@ describe("NumberField", () => {
           uiSchema,
         });
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "2." },
-        });
+        Simulate.changeText(node.querySelector("input"), "2.");
         expect(getFieldInputValueFromNode(node)).eql("2.");
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "2.0" },
-        });
+        Simulate.changeText(node.querySelector("input"), "2.0");
         expect(getFieldInputValueFromNode(node)).eql("2.0");
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "2.00" },
-        });
+        Simulate.changeText(node.querySelector("input"), "2.00");
         expect(getFieldInputValueFromNode(node)).eql("2.00");
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "2.000" },
-        });
+        Simulate.changeText(node.querySelector("input"), "2.000");
         expect(getFieldInputValueFromNode(node)).eql("2.000");
       });
 
@@ -378,9 +348,7 @@ describe("NumberField", () => {
           uiSchema,
         });
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "0" },
-        });
+        Simulate.changeText(node.querySelector("input"), "0");
         expect(getFieldInputValueFromNode(node)).eql("0");
       });
 
@@ -427,9 +395,7 @@ describe("NumberField", () => {
       const selectNode = getFieldSelectFromNode(node);
       expect(selectNode.props.selectedValue).eql("");
 
-      Simulate.valueChange(selectNode, {
-        target: { value: "1" },
-      });
+      Simulate.changeValue(selectNode, 1);
       expect(selectNode.props.selectedValue).eql(1);
       expect(spy.lastCall.args[0].formData).eql(1);
     });
@@ -466,9 +432,7 @@ describe("NumberField", () => {
         },
       });
 
-      Simulate.valueChange(getFieldSelectFromNode(node), {
-        target: { value: "2" },
-      });
+      Simulate.changeValue(getFieldSelectFromNode(node), 2);
 
       expect(node.instance.state.formData).eql(2);
     });

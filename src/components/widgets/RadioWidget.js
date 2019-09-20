@@ -38,6 +38,7 @@ function RadioWidget(props) {
             <RadioButton labelHorizontal={inline} key={i}>
               <RadioButtonInput
                 obj={option}
+                id={`${id}_${i}_input`}
                 index={i}
                 isSelected={option.value}
                 onPress={_ => onChange(option.value)}
@@ -51,6 +52,7 @@ function RadioWidget(props) {
               />
               <RadioButtonLabel
                 obj={option}
+                id={`${id}_${i}_label`}
                 index={i}
                 labelHorizontal={inline}
                 onPress={_ => onChange(option.value)}

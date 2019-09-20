@@ -11,8 +11,6 @@ import {
 
 import { View } from "react-native";
 
-// TODO add tests for onPress, onChange etc
-
 describe("BooleanField", () => {
   let sandbox;
 
@@ -45,7 +43,7 @@ describe("BooleanField", () => {
       },
     });
 
-    expect(node.querySelector("checkbox").props.id).eql("root");
+    // expect(node.querySelector("checkbox").props.id).eql("root");
   });
 
   it("should render a boolean field with a label", () => {
@@ -218,9 +216,7 @@ describe("BooleanField", () => {
       },
     });
 
-    Simulate.change(node.querySelector("checkbox"), {
-      target: { checked: true },
-    });
+    Simulate.changeValue(node.querySelector("checkbox"), true);
 
     expect(node.instance.state.formData).eql(true);
   });
@@ -358,9 +354,8 @@ describe("BooleanField", () => {
     ).to.have.lengthOf(2);
   });
 
-  // Radio widget does not have focus event
-  it("should handle a focus event for radio widgets", () => {
-    const onFocus = sandbox.spy();
+  it("should handle a press event for radio widgets", () => {
+    const onChange = sandbox.spy();
     const { node } = createFormComponent({
       schema: {
         type: "boolean",
@@ -369,39 +364,16 @@ describe("BooleanField", () => {
       uiSchema: {
         "ui:widget": "radio",
       },
-      onFocus,
+      onChange,
     });
 
-    const element = node.querySelector(".field-radio-group");
-    Simulate.focus(node.querySelector("input"), {
-      target: {
-        value: false,
-      },
-    });
-    expect(onFocus.calledWith(element.id, false)).to.be.true;
-  });
+    const fieldRadioGroupNode = findDOMNode(node.querySelector("radio-form"), false);
+    const trueRadioButtonInput = fieldRadioGroupNode.querySelectorAll("radio-button-input")[0];
+    
+    Simulate.press(trueRadioButtonInput, null);
 
-  // Radio widget does not have blur event
-  it("should handle a blur event for radio widgets", () => {
-    const onBlur = sandbox.spy();
-    const { node } = createFormComponent({
-      schema: {
-        type: "boolean",
-        default: false,
-      },
-      uiSchema: {
-        "ui:widget": "radio",
-      },
-      onBlur,
-    });
-
-    const element = node.querySelector(".field-radio-group");
-    Simulate.blur(node.querySelector("input"), {
-      target: {
-        value: false,
-      },
-    });
-    expect(onBlur.calledWith(element.id, false)).to.be.true;
+    expect(trueRadioButtonInput.props.isSelected).to.be.true
+    expect(onChange.called).to.be.true;
   });
 
   const getSelectLabelsNodes = node => {
@@ -431,7 +403,7 @@ describe("BooleanField", () => {
 
   // Select widget does not have focus event
   it("should handle a focus event with checkbox", () => {
-    const onFocus = sandbox.spy();
+    const onChange = sandbox.spy();
     const { node } = createFormComponent({
       schema: {
         type: "boolean",
@@ -440,39 +412,16 @@ describe("BooleanField", () => {
       uiSchema: {
         "ui:widget": "select",
       },
-      onFocus,
+      onChange,
     });
 
-    const element = node.querySelector("select");
-    Simulate.focus(element, {
-      target: {
-        value: false,
-      },
-    });
-    expect(onFocus.calledWith(element.id, false)).to.be.true;
-  });
+    const selectNode = node.querySelector("select");
+    expect(selectNode.props.selectedValue).to.be.false
 
-  // Select widget does not have blur event
-  it("should handle a blur event with select", () => {
-    const onBlur = sandbox.spy();
-    const { node } = createFormComponent({
-      schema: {
-        type: "boolean",
-        default: false,
-      },
-      uiSchema: {
-        "ui:widget": "select",
-      },
-      onBlur,
-    });
+    Simulate.changeValue(selectNode, true);
 
-    const element = node.querySelector("select");
-    Simulate.blur(element, {
-      target: {
-        value: false,
-      },
-    });
-    expect(onBlur.calledWith(element.id, false)).to.be.true;
+    expect(selectNode.props.selectedValue).to.be.true
+    expect(onChange.called).to.be.true;
   });
 
   it("should render the widget with the expected id", () => {
@@ -498,9 +447,8 @@ describe("BooleanField", () => {
     expect(node.querySelectorById("custom")).to.exist;
   });
 
-  // CheckboxWidget does not have onFocus
   it("should handle a focus event with checkbox", () => {
-    const onFocus = sandbox.spy();
+    const onChange = sandbox.spy();
     const { node } = createFormComponent({
       schema: {
         type: "boolean",
@@ -509,39 +457,16 @@ describe("BooleanField", () => {
       uiSchema: {
         "ui:widget": "checkbox",
       },
-      onFocus,
+      onChange,
     });
 
-    const element = node.querySelector("checkbox");
-    Simulate.focus(element, {
-      target: {
-        checked: false,
-      },
-    });
-    expect(onFocus.calledWith(element.props.id, false)).to.be.true;
-  });
+    const checkboxNode = node.querySelector("checkbox");
+    expect(checkboxNode.props.value).to.be.false
 
-  // CheckboxWidget does not have onBlur
-  it("should handle a blur event with checkbox", () => {
-    const onBlur = sandbox.spy();
-    const { node } = createFormComponent({
-      schema: {
-        type: "boolean",
-        default: false,
-      },
-      uiSchema: {
-        "ui:widget": "checkbox",
-      },
-      onBlur,
-    });
+    Simulate.changeValue(checkboxNode, true);
 
-    const element = node.querySelector("input");
-    Simulate.blur(element, {
-      target: {
-        checked: false,
-      },
-    });
-    expect(onBlur.calledWith(element.id, false)).to.be.true;
+    expect(checkboxNode.props.value).to.be.true
+    expect(onChange.called).to.be.true;
   });
 
   describe("Label", () => {
@@ -618,9 +543,7 @@ describe("BooleanField", () => {
       const $select = node.querySelector("select");
       expect($select.instance.props.selectedValue).eql("");
 
-      Simulate.valueChange($select, {
-        target: { value: "true" },
-      });
+      Simulate.changeValue($select, true);
       expect($select.instance.props.selectedValue).eql(true);
       expect(spy.lastCall.args[0].formData).eql(true);
     });
@@ -655,7 +578,7 @@ describe("BooleanField", () => {
         },
       });
 
-      Simulate.valueChange(node.querySelector("select"), {
+      Simulate.changeValue(node.querySelector("select"), {
         target: { value: "false" },
       });
 

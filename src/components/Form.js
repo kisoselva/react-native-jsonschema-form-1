@@ -323,16 +323,16 @@ export default class Form extends Component {
       noHtml5Validate,
       disabled,
       formContext,
+      submitTitle
     } = this.props;
 
     const { schema, uiSchema, formData, errorSchema, idSchema } = this.state;
     const registry = this.getRegistry();
     const _SchemaField = registry.fields.SchemaField;
-    const FormTag = tagName ? tagName : "form";
 
     // TODO style
     return (
-      <FormTag
+      <View
         className={className ? className : "rjsf"}
         id={id}
         name={name}
@@ -366,11 +366,14 @@ export default class Form extends Component {
         {children ? (
           children
         ) : (
-          <View>
-            <Button title="Submit" />
-          </View>
+          <Button
+            onPress={(formData) => this.onSubmit(formData)}
+            radius={5}
+            style={{margin: 15}}
+            title={submitTitle || 'Submit'}
+          />
         )}
-      </FormTag>
+      </View>
     );
   }
 }

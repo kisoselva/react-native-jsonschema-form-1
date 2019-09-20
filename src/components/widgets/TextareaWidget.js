@@ -18,7 +18,7 @@ function TextareaWidget(props) {
     onFocus,
     ...textareaProps
   } = props;
-  const _onChange = ({ target: { value } }) => {
+  const _onChange = (value) => {
     return onChange(value === "" ? options.emptyValue : value);
   };
   return (
@@ -34,9 +34,9 @@ function TextareaWidget(props) {
       autoFocus={autofocus}
       numberOfLines={options.rows}
       {...textareaProps}
-      onBlur={onBlur && (event => onBlur(id, event.target.value))}
-      onFocus={onFocus && (event => onFocus(id, event.target.value))}
-      onChange={_onChange}
+      onChangeText={_onChange}
+      onEndEditing={onBlur && (event => onBlur(inputProps.id, e.nativeEvent.text))}
+      onFocus={onFocus && (event => onFocus(inputProps.id, e.nativeEvent.text))}
     />
   );
 }

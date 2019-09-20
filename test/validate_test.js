@@ -863,11 +863,8 @@ describe("Validation", () => {
         expect(node.instance.state.errors).to.have.lengthOf(1);
         expect(errorTextNodes[0].props.children).to.contain(`should match pattern "\\d+"`);
 
-        Simulate.change(node.querySelector("input"), {
-          target: { value: "1234" },
-        });
+        Simulate.changeText(node.querySelector("input"), "1234");
 
-        // expect(flatListNode.querySelectorAll("text")).to.have.lengthOf(0);
         expect(node.instance.state.errors).to.have.lengthOf(0);
       });
     });

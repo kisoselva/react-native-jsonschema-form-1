@@ -94,10 +94,15 @@ export const getChildrenJoinedString = children => Array.isArray(children)
 
 export const Simulate = {
   submit: node => node._fiber.stateNode.onSubmit(),
+  
   change: (node, data) => node._fiber.stateNode.props.onChange(data),
-  valueChange: (node, data) => node._fiber.stateNode.props.onValueChange(data),
+  changeValue: (node, data) => node._fiber.stateNode.props.onValueChange(data),
+  changeText: (node, data) => node._fiber.stateNode.props.onChangeText(data),
+  endEditing: (node) => node._fiber.stateNode.props.onEndEditing(),
+  
   focus: (node) => node._fiber.stateNode.props.onFocus(),
   blur: (node) => node._fiber.stateNode.props.onBlur(),
+  press: (node) => node._fiber.stateNode.props.onPress(),
 }
 
 // Source: react-test-renderer

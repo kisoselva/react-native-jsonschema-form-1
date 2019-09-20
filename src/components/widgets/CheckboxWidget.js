@@ -52,8 +52,6 @@ function CheckboxWidget(props) {
   // the "required" attribute if the field value must be "true", due to the
   // "const" or "enum" keywords
   const required = schemaRequiresTrueValue(schema);
-
-// TODO add state and finish onChange and onValueChange
   return (
     <View className={`checkbox ${disabled || readonly ? "disabled" : ""}`}>
       {schema.description && (
@@ -66,8 +64,7 @@ function CheckboxWidget(props) {
           required={required}
           disabled={disabled || readonly}
           autoFocus={autofocus}
-          onChange={event => onChange(event.target.checked)}
-          onValueChange={event => onChange(event.target.checked)}
+          onValueChange={checked => onChange(checked)}
         />
         <Text>{label}</Text>
       </View>

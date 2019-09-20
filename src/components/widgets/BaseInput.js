@@ -17,6 +17,7 @@ function BaseInput(props) {
     autofocus,
     onBlur,
     onFocus,
+    onChange,
     options,
     schema,
     formContext,
@@ -59,10 +60,6 @@ function BaseInput(props) {
     inputProps.max = schema.maximum;
   }
 
-  const _onChange = ({ target: { value } }) => {
-    return props.onChange(value === "" ? options.emptyValue : value);
-  };
-
   return (
     <TextInput
       className="form-control"
@@ -71,9 +68,9 @@ function BaseInput(props) {
       autoFocus={autofocus}
       value={value == null ? "" : value}
       {...inputProps}
-      onChange={_onChange}
-      onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
-      onFocus={onFocus && (event => onFocus(inputProps.id, event.target.value))}
+      onChangeText={value => onChange(value === "" ? options.emptyValue : value)}
+      onEndEditing={onBlur}
+      onFocus={onFocus}
     />
   );
 }
