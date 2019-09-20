@@ -48,7 +48,7 @@ function DefaultObjectFieldTemplate(props) {
           formContext={props.formContext}
         />
       )}
-      {props.properties.map(prop => prop.content)}
+      {props.properties.map((prop, i) => <View key={i}>{prop.content}</View>)}
       {canExpand() && (
         <AddButton
           className="object-property-expand"
