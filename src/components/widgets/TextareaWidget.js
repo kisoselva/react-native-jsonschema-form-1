@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { TextInput } from "react-native";
+
 function TextareaWidget(props) {
   const {
     id,
@@ -14,21 +16,24 @@ function TextareaWidget(props) {
     onChange,
     onBlur,
     onFocus,
+    ...textareaProps
   } = props;
   const _onChange = ({ target: { value } }) => {
     return onChange(value === "" ? options.emptyValue : value);
   };
   return (
-    <textarea
+    <TextInput
       id={id}
+      multiline={true}
       className="form-control"
       value={typeof value === "undefined" ? "" : value}
       placeholder={placeholder}
       required={required}
-      disabled={disabled}
-      readOnly={readonly}
+      contextMenuHidden={disabled}
+      editable={!readonly}
       autoFocus={autofocus}
-      rows={options.rows}
+      numberOfLines={options.rows}
+      {...textareaProps}
       onBlur={onBlur && (event => onBlur(id, event.target.value))}
       onFocus={onFocus && (event => onFocus(id, event.target.value))}
       onChange={_onChange}

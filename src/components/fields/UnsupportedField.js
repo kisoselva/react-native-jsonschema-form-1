@@ -11,12 +11,12 @@ function UnsupportedField({ schema, idSchema, reason }) {
         Unsupported field schema
         {idSchema && idSchema.$id && (
           <Text>
-            {" for"} field <code>{idSchema.$id}</code>
+            {" for"} field <Text style={{fontStyle: "italic"}}>{idSchema.$id}</Text>
           </Text>
         )}
         {reason && <Text style={{fontStyle: "italic"}}>: {reason}</Text>}.
       </Text>
-      {schema && <Text>{JSON.stringify(schema, null, 2)}</Text>}
+      {schema && <Text pre={true}>{JSON.stringify(schema, null, 2)}</Text>}
     </View>
   );
 }

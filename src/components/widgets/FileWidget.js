@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { dataURItoBlob, shouldRender } from "../../utils";
 
+import { FlatList } from "react-native";
+
 function addNameToDataURL(dataURL, name) {
   return dataURL.replace(";base64", `;name=${encodeURIComponent(name)};base64`);
 }
@@ -34,16 +36,16 @@ function FilesInfo(props) {
     return null;
   }
   return (
-    <ul className="file-info">
-      {filesInfo.map((fileInfo, key) => {
-        const { name, size, type } = fileInfo;
-        return (
-          <li key={key}>
-            <strong>{name}</strong> ({type}, {size} bytes)
-          </li>
-        );
-      })}
-    </ul>
+    <FlatList
+      className="file-info"
+      data={fileInfo}
+      renderItem={({item}) =>
+        <Text>
+          <Text style={{fontWeight: "bold"}}>{item.name}</Text>
+          ({item.type}, {item.size} bytes)
+        </Text>
+      }
+    />
   );
 }
 

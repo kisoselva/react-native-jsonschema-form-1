@@ -67,7 +67,7 @@ function BaseInput(props) {
     <TextInput
       className="form-control"
       editable={!readonly}
-      disabled={disabled} // TODO: remove
+      contextMenuHidden={disabled}
       autoFocus={autofocus}
       value={value == null ? "" : value}
       {...inputProps}

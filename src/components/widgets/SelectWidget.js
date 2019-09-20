@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { asNumber, guessType } from "../../utils";
 
+import { Picker } from "react-native";
+
 const nums = new Set(["number", "integer"]);
 
 /**
@@ -46,6 +48,8 @@ function getValue(event, multiple) {
   }
 }
 
+// TODO add multiple with react-native-multiple-select
+// TODO style
 function SelectWidget(props) {
   const {
     schema,
@@ -62,47 +66,30 @@ function SelectWidget(props) {
     onFocus,
     placeholder,
   } = props;
-  const { enumOptions, enumDisabled } = options;
+  let { enumOptions, enumDisabled } = options;
+  if(!required) {
+    enumOptions = [{label: "", value: ""}, ...enumOptions];
+  }
   const emptyValue = multiple ? [] : "";
   return (
-    <select
+    <Picker
       id={id}
       multiple={multiple}
-      className="form-control"
-      value={typeof value === "undefined" ? emptyValue : value}
+      selectedValue={typeof value === "undefined" ? emptyValue : value}
       required={required}
-      disabled={disabled || readonly}
+      enabled={!(disabled || readonly)}
       autoFocus={autofocus}
-      onBlur={
-        onBlur &&
-        (event => {
-          const newValue = getValue(event, multiple);
-          onBlur(id, processValue(schema, newValue));
-        })
-      }
-      onFocus={
-        onFocus &&
-        (event => {
-          const newValue = getValue(event, multiple);
-          onFocus(id, processValue(schema, newValue));
-        })
-      }
-      onChange={event => {
+      onValueChange={event => {
         const newValue = getValue(event, multiple);
         onChange(processValue(schema, newValue));
       }}>
-      {!multiple && schema.default === undefined && (
-        <option value="">{placeholder}</option>
-      )}
       {enumOptions.map(({ value, label }, i) => {
         const disabled = enumDisabled && enumDisabled.indexOf(value) != -1;
         return (
-          <option key={i} value={value} disabled={disabled}>
-            {label}
-          </option>
+          <Picker.Item label={label} key={i+1} value={value} />
         );
       })}
-    </select>
+    </Picker>
   );
 }
 

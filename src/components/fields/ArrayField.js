@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import includes from "core-js/library/fn/array/includes";
 import * as types from "../../types";
 
+import { View } from "react-native";
+
 import UnsupportedField from "./UnsupportedField";
 import {
   getWidget,
@@ -45,14 +47,14 @@ function DefaultArrayItem(props) {
     fontWeight: "bold",
   };
   return (
-    <div key={props.key} className={props.className}>
-      <div className={props.hasToolbar ? "col-xs-9" : "col-xs-12"}>
+    <View key={props.key} className={props.className}>
+      <View className={props.hasToolbar ? "col-xs-9" : "col-xs-12"}>
         {props.children}
-      </div>
+      </View>
 
       {props.hasToolbar && (
-        <div className="col-xs-3 array-item-toolbox">
-          <div
+        <View className="col-xs-3 array-item-toolbox">
+          <View
             className="btn-group"
             style={{
               display: "flex",
@@ -93,16 +95,16 @@ function DefaultArrayItem(props) {
                 onClick={props.onDropIndexClick(props.index)}
               />
             )}
-          </div>
-        </div>
+          </View>
+        </View>
       )}
-    </div>
+    </View>
   );
 }
 
 function DefaultFixedArrayFieldTemplate(props) {
   return (
-    <fieldset className={props.className} id={props.idSchema.$id}>
+    <View className={props.className} id={props.idSchema.$id}>
       <ArrayFieldTitle
         key={`array-field-title-${props.idSchema.$id}`}
         TitleField={props.TitleField}
@@ -112,18 +114,18 @@ function DefaultFixedArrayFieldTemplate(props) {
       />
 
       {(props.uiSchema["ui:description"] || props.schema.description) && (
-        <div
+        <View
           className="field-description"
           key={`field-description-${props.idSchema.$id}`}>
           {props.uiSchema["ui:description"] || props.schema.description}
-        </div>
+        </View>
       )}
 
-      <div
+      <View
         className="row array-item-list"
         key={`array-item-list-${props.idSchema.$id}`}>
         {props.items && props.items.map(DefaultArrayItem)}
-      </div>
+      </View>
 
       {props.canAdd && (
         <AddButton
@@ -132,13 +134,13 @@ function DefaultFixedArrayFieldTemplate(props) {
           disabled={props.disabled || props.readonly}
         />
       )}
-    </fieldset>
+    </View>
   );
 }
 
 function DefaultNormalArrayFieldTemplate(props) {
   return (
-    <fieldset className={props.className} id={props.idSchema.$id}>
+    <View className={props.className} id={props.idSchema.$id}>
       <ArrayFieldTitle
         key={`array-field-title-${props.idSchema.$id}`}
         TitleField={props.TitleField}
@@ -158,11 +160,11 @@ function DefaultNormalArrayFieldTemplate(props) {
         />
       )}
 
-      <div
+      <View
         className="row array-item-list"
         key={`array-item-list-${props.idSchema.$id}`}>
         {props.items && props.items.map(p => DefaultArrayItem(p))}
-      </div>
+      </View>
 
       {props.canAdd && (
         <AddButton
@@ -171,7 +173,7 @@ function DefaultNormalArrayFieldTemplate(props) {
           disabled={props.disabled || props.readonly}
         />
       )}
-    </fieldset>
+    </View>
   );
 }
 

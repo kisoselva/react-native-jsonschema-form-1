@@ -10,6 +10,8 @@ import {
   ADDITIONAL_PROPERTY_FLAG,
 } from "../../utils";
 
+import { Text, View } from "react-native";
+
 function DefaultObjectFieldTemplate(props) {
   const canExpand = function canExpand() {
     const { formData, schema, uiSchema } = props;
@@ -30,7 +32,7 @@ function DefaultObjectFieldTemplate(props) {
 
   const { TitleField, DescriptionField } = props;
   return (
-    <fieldset id={props.idSchema.$id}>
+    <View id={props.idSchema.$id}>
       {(props.uiSchema["ui:title"] || props.title) && (
         <TitleField
           id={`${props.idSchema.$id}__title`}
@@ -54,7 +56,7 @@ function DefaultObjectFieldTemplate(props) {
           disabled={props.disabled || props.readonly}
         />
       )}
-    </fieldset>
+    </View>
   );
 }
 
@@ -228,14 +230,15 @@ class ObjectField extends Component {
       const properties = Object.keys(schema.properties || {});
       orderedProperties = orderProperties(properties, uiSchema["ui:order"]);
     } catch (err) {
+      // TODO pre
       return (
-        <div>
-          <p className="config-error" style={{ color: "red" }}>
+        <View>
+          <Text className="config-error" style={{ color: "red" }}>
             Invalid {name || "root"} object field configuration:
-            <em>{err.message}</em>.
-          </p>
-          <pre>{JSON.stringify(schema)}</pre>
-        </div>
+            <Text style={{fontStyle: "italic"}}>{err.message}</Text>.
+          </Text>
+          <Text pre={true}>{JSON.stringify(schema)}</Text>
+        </View>
       );
     }
 

@@ -1,19 +1,16 @@
 # Next to fix tests:
-- FormContext_test.js
-- ArrayFieldTemplate_test.js
-- BooleanField_test.js
-- NumberField_test.js
+- 
 
 Done:
-- [ ] ArrayFieldTemplate_test.js
+- [X] ArrayFieldTemplate_test.js
 - [ ] ArrayField_test.js
-- [ ] BooleanField_test.js
+- [X] BooleanField_test.js
 - [X] DescriptionField_test.js
 - [X] FieldTemplate_test.js
-- [ ] FormContext_test.js
+- [X] FormContext_test.js
 - [ ] Form_test.js
 - [X] NullField_test.js
-- [ ] NumberField_test.js
+- [X] NumberField_test.js
 - [X] ObjectFieldTemplate_test.js
 - [ ] ObjectField_test.js
 - [X] SchemaField_test.js

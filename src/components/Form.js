@@ -330,7 +330,7 @@ export default class Form extends Component {
     const _SchemaField = registry.fields.SchemaField;
     const FormTag = tagName ? tagName : "form";
 
-    // TODO add style
+    // TODO style
     return (
       <FormTag
         className={className ? className : "rjsf"}

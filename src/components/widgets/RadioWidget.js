@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Text, View } from "react-native";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-native-simple-radio-button";
+
 function RadioWidget(props) {
   const {
     options,
@@ -20,42 +23,46 @@ function RadioWidget(props) {
   // checked={checked} has been moved above name={name}, As mentioned in #349;
   // this is a temporary fix for radio button rendering bug in React, facebook/react#7630.
   return (
-    <div className="field-radio-group" id={id}>
+    <RadioForm
+      id={id}
+      formHorizontal={true}
+      animation={true}
+    >
       {enumOptions.map((option, i) => {
         const checked = option.value === value;
         const itemDisabled =
           enumDisabled && enumDisabled.indexOf(option.value) != -1;
         const disabledCls =
           disabled || itemDisabled || readonly ? "disabled" : "";
-        const radio = (
-          <span>
-            <input
-              type="radio"
-              checked={checked}
-              name={name}
-              required={required}
-              value={option.value}
-              disabled={disabled || itemDisabled || readonly}
-              autoFocus={autofocus && i === 0}
-              onChange={_ => onChange(option.value)}
-              onBlur={onBlur && (event => onBlur(id, event.target.value))}
-              onFocus={onFocus && (event => onFocus(id, event.target.value))}
-            />
-            <span>{option.label}</span>
-          </span>
-        );
-
-        return inline ? (
-          <label key={i} className={`radio-inline ${disabledCls}`}>
-            {radio}
-          </label>
-        ) : (
-          <div key={i} className={`radio ${disabledCls}`}>
-            <label>{radio}</label>
-          </div>
+        return (
+            <RadioButton labelHorizontal={inline} key={i}>
+              <RadioButtonInput
+                obj={option}
+                index={i}
+                isSelected={option.value}
+                onPress={_ => onChange(option.value)}
+                borderWidth={1}
+                buttonInnerColor={'#e74c3c'}
+                buttonOuterColor={'#000'}
+                buttonSize={40}
+                buttonOuterSize={80}
+                buttonStyle={{}}
+                buttonWrapStyle={{marginLeft: 10}}
+              />
+              <RadioButtonLabel
+                obj={option}
+                index={i}
+                labelHorizontal={inline}
+                onPress={_ => onChange(option.value)}
+                labelStyle={{fontSize: 20, color: '#2ecc71'}}
+                labelWrapStyle={{}}
+              >
+                {option.label}
+              </RadioButtonLabel>
+            </RadioButton>
         );
       })}
-    </div>
+    </RadioForm>
   );
 }
 

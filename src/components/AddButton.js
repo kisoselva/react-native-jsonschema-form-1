@@ -1,10 +1,13 @@
 import React from "react";
 import IconButton from "./IconButton";
 
+import { View } from "react-native";
+
+// TODO style
 export default function AddButton({ className, onClick, disabled }) {
   return (
-    <div className="row">
-      <p className={`col-xs-3 col-xs-offset-9 text-right ${className}`}>
+    <View className="row">
+      <View className={`col-xs-3 col-xs-offset-9 text-right ${className}`}>
         <IconButton
           type="info"
           icon="plus"
@@ -13,7 +16,7 @@ export default function AddButton({ className, onClick, disabled }) {
           onClick={onClick}
           disabled={disabled}
         />
-      </p>
-    </div>
+      </View>
+    </View>
   );
 }

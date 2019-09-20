@@ -10,6 +10,8 @@ import {
   getMatchingOption,
 } from "../../utils";
 
+import { View } from "react-native";
+
 class AnyOfField extends Component {
   constructor(props) {
     super(props);
@@ -129,8 +131,8 @@ class AnyOfField extends Component {
     }));
 
     return (
-      <div className="panel panel-default panel-body">
-        <div className="form-group">
+      <View className="panel panel-default panel-body">
+        <View className="form-group">
           <Widget
             id={`${idSchema.$id}_anyof_select`}
             schema={{ type: "number", default: 0 }}
@@ -141,7 +143,7 @@ class AnyOfField extends Component {
             options={{ enumOptions }}
             {...uiOptions}
           />
-        </div>
+        </View>
 
         {option !== null && (
           <_SchemaField
@@ -159,7 +161,7 @@ class AnyOfField extends Component {
             disabled={disabled}
           />
         )}
-      </div>
+      </View>
     );
   }
 }

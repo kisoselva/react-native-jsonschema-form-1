@@ -53,6 +53,7 @@ function CheckboxWidget(props) {
   // "const" or "enum" keywords
   const required = schemaRequiresTrueValue(schema);
 
+// TODO add state and finish onChange and onValueChange
   return (
     <View className={`checkbox ${disabled || readonly ? "disabled" : ""}`}>
       {schema.description && (
@@ -66,8 +67,7 @@ function CheckboxWidget(props) {
           disabled={disabled || readonly}
           autoFocus={autofocus}
           onChange={event => onChange(event.target.checked)}
-          onBlur={onBlur && (event => onBlur(id, event.target.checked))}
-          onFocus={onFocus && (event => onFocus(id, event.target.checked))}
+          onValueChange={event => onChange(event.target.checked)}
         />
         <Text>{label}</Text>
       </View>

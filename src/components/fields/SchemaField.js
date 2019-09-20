@@ -19,6 +19,7 @@ import {
   getSchemaType,
 } from "../../utils";
 import UnsupportedField from "./UnsupportedField";
+import BaseInput from "../widgets/BaseInput";
 
 const REQUIRED_FIELD_SYMBOL = "*";
 const COMPONENT_TYPES = {
@@ -77,12 +78,12 @@ export function Label(props) {
 function LabelInput(props) {
   const { id, label, onChange } = props;
   return (
-    <input
+    <BaseInput
       className="form-control"
       type="text"
       id={id}
       onBlur={event => onChange(event.target.value)}
-      defaultValue={label}
+      value={label}
     />
   );
 }
@@ -127,7 +128,7 @@ function DefaultTemplate(props) {
     displayLabel,
   } = props;
   if (hidden) {
-    return <div className="hidden">{children}</div>;
+    return <View className="hidden">{children}</View>;
   }
 
   return (

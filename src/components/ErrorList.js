@@ -2,6 +2,7 @@ import React from "react";
 
 import { FlatList, Text, View } from "react-native";
 
+// TODO style
 export default function ErrorList(props) {
   const { errors } = props;
   return (

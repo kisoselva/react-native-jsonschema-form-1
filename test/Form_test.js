@@ -127,7 +127,7 @@ describeRepeated("Form common", createFormComponent => {
       const node = findDOMNode(comp);
       const inputs = node.querySelectorAll("input");
       // TODO finish
-      console.log(inputs);
+      // console.log(inputs);
       // const ids = [];
       // for (var i = 0, len = inputs.length; i < len; i++) {
       //   const input = inputs[i];
