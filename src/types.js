@@ -33,4 +33,5 @@ export const fieldProps = {
       removable: PropTypes.bool,
     }),
   }),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

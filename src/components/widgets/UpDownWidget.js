@@ -8,13 +8,15 @@ function UpDownWidget(props) {
     registry: {
       widgets: { BaseInput },
     },
+    style
   } = props;
-  return <BaseInput type="number" {...props} {...rangeSpec(props.schema)} />;
+  return <BaseInput type="number" {...props} {...rangeSpec(props.schema)} style={style.TextInput} />;
 }
 
 if (process.env.NODE_ENV !== "production") {
   UpDownWidget.propTypes = {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

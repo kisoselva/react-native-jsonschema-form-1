@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { rangeSpec } from "../../utils";
 
+// TODO finish
 function RangeWidget(props) {
   const {
     schema,

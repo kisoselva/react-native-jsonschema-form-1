@@ -117,7 +117,7 @@ export default class Form extends Component {
 
   renderErrors() {
     const { errors, errorSchema, schema, uiSchema } = this.state;
-    const { ErrorList, showErrorList, formContext } = this.props;
+    const { ErrorList, showErrorList, formContext, style = {} } = this.props;
 
     if (errors.length && showErrorList != false) {
       return (
@@ -127,6 +127,7 @@ export default class Form extends Component {
           schema={schema}
           uiSchema={uiSchema}
           formContext={formContext}
+          style={style.ErrorList}
         />
       );
     }
@@ -323,14 +324,14 @@ export default class Form extends Component {
       noHtml5Validate,
       disabled,
       formContext,
-      submitTitle
+      submitTitle,
+      style = {},
     } = this.props;
 
     const { schema, uiSchema, formData, errorSchema, idSchema } = this.state;
     const registry = this.getRegistry();
     const _SchemaField = registry.fields.SchemaField;
 
-    // TODO style
     return (
       <View
         className={className ? className : "rjsf"}
@@ -362,14 +363,14 @@ export default class Form extends Component {
           registry={registry}
           safeRenderCompletion={safeRenderCompletion}
           disabled={disabled}
+          style={style}
         />
         {children ? (
           children
         ) : (
           <Button
             onPress={(formData) => this.onSubmit(formData)}
-            radius={5}
-            style={{margin: 15}}
+            style={style.Button || {margin: 15}}
             title={submitTitle || 'Submit'}
           />
         )}
@@ -415,5 +416,6 @@ if (process.env.NODE_ENV !== "production") {
     customFormats: PropTypes.object,
     additionalMetaSchemas: PropTypes.arrayOf(PropTypes.object),
     omitExtraData: PropTypes.bool,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }

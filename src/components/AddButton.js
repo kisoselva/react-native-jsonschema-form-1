@@ -3,8 +3,7 @@ import IconButton from "./IconButton";
 
 import { View } from "react-native";
 
-// TODO style
-export default function AddButton({ className, onClick, disabled }) {
+export default function AddButton({ className, onClick, disabled, style }) {
   return (
     <View className="row">
       <View className={`col-xs-3 col-xs-offset-9 text-right ${className}`}>
@@ -15,6 +14,7 @@ export default function AddButton({ className, onClick, disabled }) {
           tabIndex="0"
           onClick={onClick}
           disabled={disabled}
+          style={style}
         />
       </View>
     </View>

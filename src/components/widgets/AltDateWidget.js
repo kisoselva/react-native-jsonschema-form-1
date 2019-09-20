@@ -27,6 +27,7 @@ function DateElement(props) {
     autofocus,
     registry,
     onBlur,
+    style,
   } = props;
   const id = rootId + "_" + type;
   const { SelectWidget } = registry.widgets;
@@ -43,6 +44,7 @@ function DateElement(props) {
       autofocus={autofocus}
       onChange={value => select(type, value)}
       onBlur={onBlur}
+      style={style}
     />
   );
 }
@@ -56,6 +58,7 @@ class AltDateWidget extends Component {
     options: {
       yearsRange: [1900, new Date().getFullYear() + 2],
     },
+    style: {}
   };
 
   constructor(props) {
@@ -124,6 +127,7 @@ class AltDateWidget extends Component {
     return data;
   }
 
+  // TODO finish
   render() {
     const {
       id,
@@ -189,6 +193,7 @@ if (process.env.NODE_ENV !== "production") {
     onBlur: PropTypes.func,
     time: PropTypes.bool,
     options: PropTypes.object,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

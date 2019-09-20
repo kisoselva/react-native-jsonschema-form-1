@@ -2,9 +2,8 @@ import React from "react";
 
 import { FlatList, Text, View } from "react-native";
 
-// TODO style
 export default function ErrorList(props) {
-  const { errors } = props;
+  const { errors, style } = props;
   return (
     <View className="panel panel-danger errors">
       <View className="panel-heading">
@@ -15,6 +14,7 @@ export default function ErrorList(props) {
         renderItem={({item}) =>
           <Text className="list-group-item text-danger">{item.key}</Text>
         }
+        style={style}
       />
     </View>
   );

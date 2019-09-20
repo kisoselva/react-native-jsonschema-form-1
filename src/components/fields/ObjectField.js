@@ -30,7 +30,7 @@ function DefaultObjectFieldTemplate(props) {
     return true;
   };
 
-  const { TitleField, DescriptionField } = props;
+  const { TitleField, DescriptionField, style } = props;
   return (
     <View id={props.idSchema.$id}>
       {(props.uiSchema["ui:title"] || props.title) ? (
@@ -39,6 +39,7 @@ function DefaultObjectFieldTemplate(props) {
           title={props.title || props.uiSchema["ui:title"]}
           required={props.required}
           formContext={props.formContext}
+          style={style.TitleField}
         />
       ) : null}
       {props.description ? (
@@ -46,6 +47,7 @@ function DefaultObjectFieldTemplate(props) {
           id={`${props.idSchema.$id}__description`}
           description={props.description}
           formContext={props.formContext}
+          style={style.DescriptionField}
         />
       ) : null}
       {props.properties.map((prop, i) => <View key={i}>{prop.content}</View>)}
@@ -54,6 +56,7 @@ function DefaultObjectFieldTemplate(props) {
           className="object-property-expand"
           onClick={props.onAddClick(props.schema)}
           disabled={props.disabled || props.readonly}
+          style={style.AddButton}
         />
       )}
     </View>
@@ -210,6 +213,7 @@ class ObjectField extends Component {
       onBlur,
       onFocus,
       registry = getDefaultRegistry(),
+      style,
     } = this.props;
 
     const { definitions, fields, formContext } = registry;
@@ -237,7 +241,7 @@ class ObjectField extends Component {
             Invalid {name || "root"} object field configuration:
             <Text style={{fontStyle: "italic"}}>{err.message}</Text>.
           </Text>
-          <Text pre={true}>{JSON.stringify(schema)}</Text>
+          <Text style={style.pre}>{JSON.stringify(schema)}</Text>
         </View>
       );
     }
@@ -284,6 +288,7 @@ class ObjectField extends Component {
               disabled={disabled}
               readonly={readonly}
               onDropPropertyClick={this.onDropPropertyClick}
+              style={style}
             />
           ),
           name,
@@ -301,7 +306,7 @@ class ObjectField extends Component {
       formData,
       formContext,
     };
-    return <Template {...templateProps} onAddClick={this.handleAddClick} />;
+    return <Template {...templateProps} onAddClick={this.handleAddClick} style={style} />;
   }
 }
 

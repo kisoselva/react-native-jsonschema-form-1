@@ -49,7 +49,6 @@ function getValue(event, multiple) {
   }
 }
 
-// TODO style
 function SelectWidget(props) {
   const {
     schema,
@@ -65,6 +64,7 @@ function SelectWidget(props) {
     onBlur,
     onFocus,
     placeholder,
+    style = {},
   } = props;
   let { enumOptions, enumDisabled } = options;
   if(!required) {
@@ -83,7 +83,9 @@ function SelectWidget(props) {
         // const newValue = getValue(event, multiple);
         const newValue = value;
         onChange(processValue(schema, newValue));
-      }}>
+      }}
+      style={style.Picker}
+    >
       {enumOptions.map(({ value, label }, i) => {
         const disabled = enumDisabled && enumDisabled.indexOf(value) != -1;
         return (
@@ -114,6 +116,7 @@ if (process.env.NODE_ENV !== "production") {
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

@@ -16,6 +16,7 @@ function RadioWidget(props) {
     onFocus,
     onChange,
     id,
+    style,
   } = props;
   // Generating a unique field name to identify this set of radio buttons
   const name = Math.random().toString();
@@ -27,6 +28,7 @@ function RadioWidget(props) {
       id={id}
       formHorizontal={true}
       animation={true}
+      style={style.RadioForm}
     >
       {enumOptions.map((option, i) => {
         const checked = option.value === value;
@@ -49,6 +51,7 @@ function RadioWidget(props) {
                 buttonOuterSize={80}
                 buttonStyle={{}}
                 buttonWrapStyle={{marginLeft: 10}}
+                style={style.RadioButtonInput}
               />
               <RadioButtonLabel
                 obj={option}
@@ -58,6 +61,7 @@ function RadioWidget(props) {
                 onPress={_ => onChange(option.value)}
                 labelStyle={{fontSize: 20, color: '#2ecc71'}}
                 labelWrapStyle={{}}
+                style={style.RadioButtonLabel}
               >
                 {option.label}
               </RadioButtonLabel>
@@ -86,6 +90,7 @@ if (process.env.NODE_ENV !== "production") {
     readonly: PropTypes.bool,
     autofocus: PropTypes.bool,
     onChange: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 export default RadioWidget;

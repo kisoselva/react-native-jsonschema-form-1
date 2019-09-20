@@ -6,11 +6,11 @@ import { Text } from "react-native";
 const REQUIRED_FIELD_SYMBOL = "*";
 
 function TitleField(props) {
-  const { id, title, required } = props;
+  const { id, title, required, style } = props;
   return (
-    <Text id={id}>
+    <Text id={id} style={style}>
       {title}
-      {required && <Text className="required">{REQUIRED_FIELD_SYMBOL}</Text>}
+      {required && <Text className="required" style={style && style.required}>{REQUIRED_FIELD_SYMBOL}</Text>}
     </Text>
   );
 }
@@ -20,6 +20,7 @@ if (process.env.NODE_ENV !== "production") {
     id: PropTypes.string,
     title: PropTypes.string,
     required: PropTypes.bool,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

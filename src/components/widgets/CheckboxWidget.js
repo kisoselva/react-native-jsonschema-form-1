@@ -46,6 +46,7 @@ function CheckboxWidget(props) {
     onBlur,
     onFocus,
     onChange,
+    style
   } = props;
 
   // Because an unchecked checkbox will cause html5 validation to fail, only add
@@ -65,6 +66,7 @@ function CheckboxWidget(props) {
           disabled={disabled || readonly}
           autoFocus={autofocus}
           onValueChange={checked => onChange(checked)}
+          style={style.CheckBox}
         />
         <Text>{label}</Text>
       </View>
@@ -86,6 +88,7 @@ if (process.env.NODE_ENV !== "production") {
     readonly: PropTypes.bool,
     autofocus: PropTypes.bool,
     onChange: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

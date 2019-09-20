@@ -4,7 +4,7 @@ import AltDateWidget from "./AltDateWidget";
 
 function AltDateTimeWidget(props) {
   const { AltDateWidget } = props.registry.widgets;
-  return <AltDateWidget time {...props} />;
+  return <AltDateWidget time {...props} style={props.style} />;
 }
 
 if (process.env.NODE_ENV !== "production") {
@@ -15,12 +15,14 @@ if (process.env.NODE_ENV !== "production") {
     required: PropTypes.bool,
     onChange: PropTypes.func,
     options: PropTypes.object,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 
 AltDateTimeWidget.defaultProps = {
   ...AltDateWidget.defaultProps,
   time: true,
+  style: {}
 };
 
 export default AltDateTimeWidget;

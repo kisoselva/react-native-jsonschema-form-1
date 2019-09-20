@@ -26,6 +26,7 @@ function StringField(props) {
     onFocus,
     registry = getDefaultRegistry(),
     rawErrors,
+    style
   } = props;
   const { title, format } = schema;
   const { widgets, formContext } = registry;
@@ -56,6 +57,7 @@ function StringField(props) {
       registry={registry}
       placeholder={placeholder}
       rawErrors={rawErrors}
+      style={style}
     />
   );
 }
@@ -69,6 +71,7 @@ StringField.defaultProps = {
   disabled: false,
   readonly: false,
   autofocus: false,
+  style: {}
 };
 
 export default StringField;

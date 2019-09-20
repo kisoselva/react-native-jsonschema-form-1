@@ -64,7 +64,7 @@ class NumberField extends React.Component {
 
   render() {
     const { StringField } = this.props.registry.fields;
-    const { formData, ...props } = this.props;
+    const { formData, style, ...props } = this.props;
     const { lastValue } = this.state;
 
     let value = formData;
@@ -83,7 +83,7 @@ class NumberField extends React.Component {
     }
 
     return (
-      <StringField {...props} formData={value} onChange={this.handleChange} />
+      <StringField {...props} formData={value} onChange={this.handleChange} style={style} />
     );
   }
 }

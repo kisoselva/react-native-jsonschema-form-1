@@ -17,7 +17,7 @@ function deselectValue(value, selected) {
 }
 
 function CheckboxesWidget(props) {
-  const { id, disabled, options, value, autofocus, readonly, onChange } = props;
+  const { id, disabled, options, value, autofocus, readonly, onChange, style } = props;
   const { enumOptions, enumDisabled, inline } = options;
   return (
     <View className="checkboxes" id={id}>
@@ -42,6 +42,7 @@ function CheckboxesWidget(props) {
                   onChange(deselectValue(option.value, value));
                 }
               }}
+              style={style.CheckBox}
             />
             <Text>{option.label}</Text>
           </View>
@@ -65,6 +66,7 @@ CheckboxesWidget.defaultProps = {
   options: {
     inline: false,
   },
+  style: {}
 };
 
 if (process.env.NODE_ENV !== "production") {
@@ -82,6 +84,7 @@ if (process.env.NODE_ENV !== "production") {
     multiple: PropTypes.bool,
     autofocus: PropTypes.bool,
     onChange: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

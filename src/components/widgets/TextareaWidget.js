@@ -16,6 +16,7 @@ function TextareaWidget(props) {
     onChange,
     onBlur,
     onFocus,
+    style,
     ...textareaProps
   } = props;
   const _onChange = (value) => {
@@ -33,6 +34,7 @@ function TextareaWidget(props) {
       editable={!readonly}
       autoFocus={autofocus}
       numberOfLines={options.rows}
+      style={style.TextInput}
       {...textareaProps}
       onChangeText={_onChange}
       onEndEditing={onBlur && (event => onBlur(inputProps.id, e.nativeEvent.text))}
@@ -62,6 +64,7 @@ if (process.env.NODE_ENV !== "production") {
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

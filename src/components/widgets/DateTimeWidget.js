@@ -39,6 +39,7 @@ function DateTimeWidget(props) {
     registry: {
       widgets: { BaseInput },
     },
+    style
   } = props;
   return (
     <BaseInput
@@ -46,6 +47,7 @@ function DateTimeWidget(props) {
       {...props}
       value={utcToLocal(value)}
       onChange={value => onChange(localToUTC(value))}
+      style={style.DateTimeInput || style.BaseInput}
     />
   );
 }
@@ -53,6 +55,7 @@ function DateTimeWidget(props) {
 if (process.env.NODE_ENV !== "production") {
   DateTimeWidget.propTypes = {
     value: PropTypes.string,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

@@ -63,20 +63,20 @@ function getFieldComponent(schema, uiSchema, idSchema, fields) {
 }
 
 export function Label(props) {
-  const { label, required, id } = props;
+  const { label, required, id, style } = props;
   if (!label) {
     return null;
   }
   return (
-    <Text className="control-label" htmlFor={id}>
+    <Text className="control-label" htmlFor={id} style={style && style.Label}>
       {label}
-      {required && <Text className="required">{REQUIRED_FIELD_SYMBOL}</Text>}
+      {required && <Text className="required" style={style && style.Label && style.Label.required}>{REQUIRED_FIELD_SYMBOL}</Text>}
     </Text>
   );
 }
 
 function LabelInput(props) {
-  const { id, label, onChange } = props;
+  const { id, label, onChange, style } = props;
   return (
     <BaseInput
       className="form-control"
@@ -84,23 +84,24 @@ function LabelInput(props) {
       id={id}
       onBlur={e => onChange(e.nativeEvent.text)}
       value={label}
+      style={style.TextInput}
     />
   );
 }
 
 function Help(props) {
-  const { help } = props;
+  const { help, style = {} } = props;
   if (!help) {
     return null;
   }
   if (typeof help === "string") {
-    return <Text className="help-block">{help}</Text>;
+    return <Text className="help-block" style={style.Help}>{help}</Text>;
   }
-  return <View className="help-block">{help}</View>;
+  return <View className="help-block"><Text style={style.Help}>{help}</Text></View>;
 }
 
 function ErrorList(props) {
-  const { errors = [] } = props;
+  const { errors = [], style = {} } = props;
   if (errors.length === 0) {
     return null;
   }
@@ -111,6 +112,7 @@ function ErrorList(props) {
         renderItem={({item}) =>
           <Text className="text-danger">{item.key}</Text>
         }
+        style={style.ErrorList}
       />
     </View>
   );
@@ -126,6 +128,7 @@ function DefaultTemplate(props) {
     hidden,
     required,
     displayLabel,
+    style,
   } = props;
   if (hidden) {
     return <View className="hidden">{children}</View>;
@@ -159,6 +162,7 @@ if (process.env.NODE_ENV !== "production") {
     displayLabel: PropTypes.bool,
     fields: PropTypes.object,
     formContext: PropTypes.object,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
   };
 }
 
@@ -167,6 +171,7 @@ DefaultTemplate.defaultProps = {
   readonly: false,
   required: false,
   displayLabel: true,
+  style: {}
 };
 
 function WrapIfAdditional(props) {
@@ -180,6 +185,7 @@ function WrapIfAdditional(props) {
     readonly,
     required,
     schema,
+    style
   } = props;
   const keyLabel = `${label} Key`; // i18n ?
   const additional = schema.hasOwnProperty(ADDITIONAL_PROPERTY_FLAG);
@@ -199,6 +205,7 @@ function WrapIfAdditional(props) {
               required={required}
               id={`${id}-key`}
               onChange={onKeyChange}
+              style={style}
             />
           </View>
         </View>
@@ -214,6 +221,7 @@ function WrapIfAdditional(props) {
             style={{ border: "0" }}
             disabled={disabled || readonly}
             onClick={onDropPropertyClick(label)}
+            style={style && style.IconButton}
           />
         </View>
       </View>
@@ -233,6 +241,7 @@ function SchemaFieldRender(props) {
     required,
     registry = getDefaultRegistry(),
     wasPropertyKeyModified = false,
+    style = {}
   } = props;
   const { definitions, fields, formContext } = registry;
   const FieldTemplate =
@@ -289,6 +298,7 @@ function SchemaFieldRender(props) {
       errorSchema={fieldErrorSchema}
       formContext={formContext}
       rawErrors={__errors}
+      style={style}
     />
   );
 
@@ -331,7 +341,7 @@ function SchemaFieldRender(props) {
     rawDescription: description,
     help: <Help help={help} />,
     rawHelp: typeof help === "string" ? help : undefined,
-    errors: <ErrorList errors={errors} />,
+    errors: <ErrorList errors={errors} style={style.ErrorList} />,
     rawErrors: errors,
     id,
     label,

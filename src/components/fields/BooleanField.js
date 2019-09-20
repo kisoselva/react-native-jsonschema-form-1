@@ -24,6 +24,7 @@ function BooleanField(props) {
     onFocus,
     onBlur,
     rawErrors,
+    style,
   } = props;
   const { title } = schema;
   const { widgets, formContext } = registry;
@@ -67,6 +68,7 @@ function BooleanField(props) {
       formContext={formContext}
       autofocus={autofocus}
       rawErrors={rawErrors}
+      style={style}
     />
   );
 }

@@ -23,6 +23,7 @@ function BaseInput(props) {
     formContext,
     registry,
     rawErrors,
+    style,
     ...inputProps
   } = props;
 
@@ -67,6 +68,7 @@ function BaseInput(props) {
       contextMenuHidden={disabled}
       autoFocus={autofocus}
       value={value == null ? "" : value}
+      style={style}
       {...inputProps}
       onChangeText={value => onChange(value === "" ? options.emptyValue : value)}
       onEndEditing={onBlur}
@@ -80,6 +82,7 @@ BaseInput.defaultProps = {
   disabled: false,
   readonly: false,
   autofocus: false,
+  style: {}
 };
 
 if (process.env.NODE_ENV !== "production") {
@@ -94,6 +97,7 @@ if (process.env.NODE_ENV !== "production") {
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

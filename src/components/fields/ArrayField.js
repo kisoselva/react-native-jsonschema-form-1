@@ -22,25 +22,25 @@ import {
 } from "../../utils";
 import shortid from "shortid";
 
-function ArrayFieldTitle({ TitleField, idSchema, title, required }) {
+function ArrayFieldTitle({ TitleField, idSchema, title, required, style }) {
   if (!title) {
     return null;
   }
   const id = `${idSchema.$id}__title`;
-  return <TitleField id={id} title={title} required={required} />;
+  return <TitleField id={id} title={title} required={required} style={style.TitleField} />;
 }
 
-function ArrayFieldDescription({ DescriptionField, idSchema, description }) {
+function ArrayFieldDescription({ DescriptionField, idSchema, description, style }) {
   if (!description) {
     return null;
   }
   const id = `${idSchema.$id}__description`;
-  return <DescriptionField id={id} description={description} />;
+  return <DescriptionField id={id} description={description} style={style.DescriptionField} />;
 }
 
 // Used in the two templates
 function DefaultArrayItem(props) {
-  const btnStyle = {
+  const iconButtonStyle = (props.style && props.style.IconButton) || {
     flex: 1,
     paddingLeft: 6,
     paddingRight: 6,
@@ -65,7 +65,7 @@ function DefaultArrayItem(props) {
                 icon="arrow-up"
                 className="array-item-move-up"
                 tabIndex="-1"
-                style={btnStyle}
+                style={iconButtonStyle}
                 disabled={props.disabled || props.readonly || !props.hasMoveUp}
                 onClick={props.onReorderClick(props.index, props.index - 1)}
               />
@@ -76,7 +76,7 @@ function DefaultArrayItem(props) {
                 icon="arrow-down"
                 className="array-item-move-down"
                 tabIndex="-1"
-                style={btnStyle}
+                style={iconButtonStyle}
                 disabled={
                   props.disabled || props.readonly || !props.hasMoveDown
                 }
@@ -90,7 +90,7 @@ function DefaultArrayItem(props) {
                 icon="remove"
                 className="array-item-remove"
                 tabIndex="-1"
-                style={btnStyle}
+                style={iconButtonStyle}
                 disabled={props.disabled || props.readonly}
                 onClick={props.onDropIndexClick(props.index)}
               />
@@ -111,6 +111,7 @@ function DefaultFixedArrayFieldTemplate(props) {
         idSchema={props.idSchema}
         title={props.uiSchema["ui:title"] || props.title}
         required={props.required}
+        style={props.style}
       />
 
       {(props.uiSchema["ui:description"] || props.schema.description) && (
@@ -132,6 +133,7 @@ function DefaultFixedArrayFieldTemplate(props) {
           className="array-item-add"
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
+          style={props.AddButton}
         />
       )}
     </View>
@@ -147,6 +149,7 @@ function DefaultNormalArrayFieldTemplate(props) {
         idSchema={props.idSchema}
         title={props.uiSchema["ui:title"] || props.title}
         required={props.required}
+        style={props.style}
       />
 
       {(props.uiSchema["ui:description"] || props.schema.description) && (
@@ -171,6 +174,7 @@ function DefaultNormalArrayFieldTemplate(props) {
           className="array-item-add"
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
+          style={props.style.AddButton}
         />
       )}
     </View>
@@ -426,6 +430,7 @@ class ArrayField extends Component {
       uiSchema,
       idSchema,
       registry = getDefaultRegistry(),
+      style
     } = this.props;
     const { definitions } = registry;
     if (!schema.hasOwnProperty("items")) {
@@ -434,6 +439,7 @@ class ArrayField extends Component {
           schema={schema}
           idSchema={idSchema}
           reason="Missing items definition"
+          style={style.UnsupportedField}
         />
       );
     }
@@ -466,6 +472,7 @@ class ArrayField extends Component {
       onFocus,
       idPrefix,
       rawErrors,
+      style,
     } = this.props;
     const title = schema.title === undefined ? name : schema.title;
     const { ArrayFieldTemplate, definitions, fields, formContext } = registry;
@@ -515,6 +522,7 @@ class ArrayField extends Component {
       formData,
       rawErrors,
       registry,
+      style,
     };
 
     // Check if a custom render function was passed in
@@ -541,6 +549,7 @@ class ArrayField extends Component {
       onFocus,
       registry = getDefaultRegistry(),
       rawErrors,
+      style,
     } = this.props;
     const items = this.props.formData;
     const { widgets, definitions, formContext } = registry;
@@ -570,6 +579,7 @@ class ArrayField extends Component {
         formContext={formContext}
         autofocus={autofocus}
         rawErrors={rawErrors}
+        style={style}
       />
     );
   }
@@ -587,6 +597,7 @@ class ArrayField extends Component {
       onFocus,
       registry = getDefaultRegistry(),
       rawErrors,
+      style,
     } = this.props;
     const title = schema.title || name;
     const items = this.props.formData;
@@ -609,6 +620,7 @@ class ArrayField extends Component {
         formContext={formContext}
         autofocus={autofocus}
         rawErrors={rawErrors}
+        style={style}
       />
     );
   }
@@ -630,6 +642,7 @@ class ArrayField extends Component {
       onBlur,
       onFocus,
       rawErrors,
+      style,
     } = this.props;
     const title = schema.title || name;
     let items = this.props.formData;
@@ -701,6 +714,7 @@ class ArrayField extends Component {
       TitleField,
       formContext,
       rawErrors,
+      style,
     };
 
     // Check if a custom template template was passed in
@@ -727,6 +741,7 @@ class ArrayField extends Component {
       onBlur,
       onFocus,
       rawErrors,
+      style,
     } = props;
     const {
       disabled,
@@ -766,6 +781,7 @@ class ArrayField extends Component {
           readonly={this.props.readonly}
           autofocus={autofocus}
           rawErrors={rawErrors}
+          style={style}
         />
       ),
       className: "array-item",

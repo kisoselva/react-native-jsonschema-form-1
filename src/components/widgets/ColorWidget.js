@@ -8,8 +8,16 @@ function ColorWidget(props) {
     registry: {
       widgets: { BaseInput },
     },
+    style
   } = props;
-  return <BaseInput type="color" {...props} disabled={disabled || readonly} />;
+  return (
+    <BaseInput
+      type="color"
+      {...props}
+      disabled={disabled || readonly}
+      style={style.TextInput}
+    />
+    );
 }
 
 if (process.env.NODE_ENV !== "production") {
@@ -22,6 +30,7 @@ if (process.env.NODE_ENV !== "production") {
     readonly: PropTypes.bool,
     autofocus: PropTypes.bool,
     onChange: PropTypes.func,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

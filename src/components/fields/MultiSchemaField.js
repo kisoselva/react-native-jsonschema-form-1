@@ -106,6 +106,7 @@ class AnyOfField extends Component {
       registry,
       safeRenderCompletion,
       uiSchema,
+      style,
     } = this.props;
 
     const _SchemaField = registry.fields.SchemaField;
@@ -141,6 +142,7 @@ class AnyOfField extends Component {
             onFocus={onFocus}
             value={selectedOption}
             options={{ enumOptions }}
+            style={style}
             {...uiOptions}
           />
         </View>
@@ -159,6 +161,7 @@ class AnyOfField extends Component {
             registry={registry}
             safeRenderCompletion={safeRenderCompletion}
             disabled={disabled}
+            style={style}
           />
         )}
       </View>
@@ -182,6 +185,7 @@ if (process.env.NODE_ENV !== "production") {
     formData: PropTypes.any,
     errorSchema: PropTypes.object,
     registry: types.registry.isRequired,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 

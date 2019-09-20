@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 
 // TODO add pre style
-function UnsupportedField({ schema, idSchema, reason }) {
+function UnsupportedField({ schema, idSchema, reason, style }) {
   return (
     <View className="unsupported-field">
-      <Text>
+      <Text style={style}>
         Unsupported field schema
         {idSchema && idSchema.$id && (
           <Text>
@@ -26,6 +26,7 @@ if (process.env.NODE_ENV !== "production") {
     schema: PropTypes.object.isRequired,
     idSchema: PropTypes.object,
     reason: PropTypes.string,
+    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 }
 
