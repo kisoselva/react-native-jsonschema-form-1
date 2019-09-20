@@ -49,7 +49,8 @@
     "preset": "react-native",
     "testRegex": "(/test/.*|_test)\\.js$",
     "testPathIgnorePatterns": [
-      "test/test_utils.js"
+      "test/test_utils.js",
+      "test/tag_to_component_map.js"
     ]
   },
   "prettierOptions": "--jsx-bracket-same-line --trailing-comma es5 --semi --tab-width 2"

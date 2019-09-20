@@ -279,7 +279,7 @@ class ArrayField extends Component {
   };
 
   onAddClick = event => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const { onChange } = this.props;
     const newKeyedFormDataRow = {
@@ -298,9 +298,9 @@ class ArrayField extends Component {
 
   onAddIndexClick = index => {
     return event => {
-      if (event) {
-        event.preventDefault();
-      }
+      // if (event) {
+      //   event.preventDefault();
+      // }
       const { onChange } = this.props;
       const newKeyedFormDataRow = {
         key: generateRowId(),
@@ -321,9 +321,9 @@ class ArrayField extends Component {
 
   onDropIndexClick = index => {
     return event => {
-      if (event) {
-        event.preventDefault();
-      }
+      // if (event) {
+      //   event.preventDefault();
+      // }
       const { onChange } = this.props;
       const { keyedFormData } = this.state;
       // refs #195: revalidate to ensure properly reindexing errors
@@ -353,10 +353,10 @@ class ArrayField extends Component {
 
   onReorderClick = (index, newIndex) => {
     return event => {
-      if (event) {
-        event.preventDefault();
-        event.target.blur();
-      }
+      // if (event) {
+      //   event.preventDefault();
+      //   event.target.blur();
+      // }
       const { onChange } = this.props;
       let newErrorSchema;
       if (this.props.errorSchema) {

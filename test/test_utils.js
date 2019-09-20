@@ -23,10 +23,11 @@ export function createSandbox() {
   return sandbox;
 }
 
-// export function setProps(comp, newProps) {
-//   const node = findDOMNode(comp);
-//   render(React.createElement(comp.constructor, newProps), node.parentNode);
-// }
+export function setProps(comp, newProps) {
+  const node = findDOMNode(comp);
+  const props = {...node.props, ...newProps};
+  return createFormComponent(props);
+}
 
 /* Run a group of tests with different combinations of omitExtraData and liveOmit as form props.
  */
@@ -54,19 +55,46 @@ export function renderIntoDocument(component) {
 export function findDOMNode(componentOrNode, isComponent = true) {
   const node = isComponent ? componentOrNode.root : componentOrNode;
   
-  node.tagName = (isComponent ? node.type.name : node.type).toUpperCase();
-  
-  node.querySelectorAll = tag => node.findAllByType(tagToComponentMap[tag]);
+  try {
+    node.tagName = (isComponent ? node.type.name : node.type).toUpperCase();
+  } catch(e) {
+    node.tagName = null;
+  }
 
   node.querySelector = tag => node.findByType(tagToComponentMap[tag]);
   
+  node.querySelectorAll = tag => node.findAllByType(tagToComponentMap[tag]);
+
+  node.querySelectorAllExcludeFunctions = tag => node.querySelectorAll(tag)
+    .filter(instance => !_.isFunction(instance.type));
+
+  node.querySelectorByClassName = className => findDOMNode(node.querySelectorAllByClassName(className)[0], false);
+  
   node.querySelectorAllByClassName = className => _findAll(node,
     instance => !_.isFunction(instance.type)
-      && instance.props.className ? instance.props.className.indexOf(className) !== -1 : false,
+      && instance.props.className ? instance.props.className.split(" ").indexOf(className) !== -1 : false,
     { deep: true }
   )
 
+  node.querySelectorAllById = id => node.findAllByPropsExcludeFunctions({id: id});
+
+  node.querySelectorById = id => node.querySelectorAllById(id)[0];
+
+  node.findAllByPropsExcludeFunctions = props => node.findAllByProps(props)
+    .filter(instance => !_.isFunction(instance.type));
+
   return node;
+}
+
+export const getChildrenJoinedString = children => Array.isArray(children)
+  ? children.map(
+      child => typeof child === "string" ? child : getChildrenJoinedString(child.props.children)
+    ).join("")
+  : children;
+
+export const Simulate = {
+  submit: node => node._fiber.stateNode.onSubmit(),
+  change: (node, data) => node._fiber.stateNode.props.onChange(data)
 }
 
 // Source: react-test-renderer

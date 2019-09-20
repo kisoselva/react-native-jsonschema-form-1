@@ -1,20 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { Text, View } from "react-native";
+
+// TODO add pre style
 function UnsupportedField({ schema, idSchema, reason }) {
   return (
-    <div className="unsupported-field">
-      <p>
+    <View className="unsupported-field">
+      <Text>
         Unsupported field schema
         {idSchema && idSchema.$id && (
-          <span>
+          <Text>
             {" for"} field <code>{idSchema.$id}</code>
-          </span>
+          </Text>
         )}
-        {reason && <em>: {reason}</em>}.
-      </p>
-      {schema && <pre>{JSON.stringify(schema, null, 2)}</pre>}
-    </div>
+        {reason && <Text style={{fontStyle: "italic"}}>: {reason}</Text>}.
+      </Text>
+      {schema && <Text>{JSON.stringify(schema, null, 2)}</Text>}
+    </View>
   );
 }
 

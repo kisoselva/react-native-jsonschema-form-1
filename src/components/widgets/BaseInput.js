@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { TextInput } from 'react-native';
+
 function BaseInput(props) {
   // Note: since React 15.2.0 we can't forward unknown element attributes, so we
   // exclude the "options" and "schema" ones here.
@@ -62,10 +64,10 @@ function BaseInput(props) {
   };
 
   return (
-    <input
+    <TextInput
       className="form-control"
-      readOnly={readonly}
-      disabled={disabled}
+      editable={!readonly}
+      disabled={disabled} // TODO: remove
       autoFocus={autofocus}
       value={value == null ? "" : value}
       {...inputProps}

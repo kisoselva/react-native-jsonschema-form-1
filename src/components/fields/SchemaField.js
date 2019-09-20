@@ -4,7 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as types from "../../types";
 
-import { View, Text } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 import {
   isMultiSelect,
@@ -93,9 +93,9 @@ function Help(props) {
     return null;
   }
   if (typeof help === "string") {
-    return <p className="help-block">{help}</p>;
+    return <Text className="help-block">{help}</Text>;
   }
-  return <div className="help-block">{help}</div>;
+  return <View className="help-block">{help}</View>;
 }
 
 function ErrorList(props) {
@@ -103,21 +103,15 @@ function ErrorList(props) {
   if (errors.length === 0) {
     return null;
   }
-
   return (
-    <div>
-      <ul className="error-detail bs-callout bs-callout-info">
-        {errors
-          .filter(elem => !!elem)
-          .map((error, index) => {
-            return (
-              <li className="text-danger" key={index}>
-                {error}
-              </li>
-            );
-          })}
-      </ul>
-    </div>
+    <View>
+      <FlatList
+        data={errors.filter(elem => !!elem).map((error, index) => ({key: error}))}
+        renderItem={({item}) =>
+          <Text className="text-danger">{item.key}</Text>
+        }
+      />
+    </View>
   );
 }
 function DefaultTemplate(props) {

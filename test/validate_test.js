@@ -1,10 +1,17 @@
 import React from "react";
 import { expect } from "chai";
 import sinon from "sinon";
-import { Simulate } from "react-dom/test-utils";
 
 import validateFormData, { isValid, toErrorList } from "../src/validate";
-import { createFormComponent } from "./test_utils";
+import renderer, { act } from 'react-test-renderer';
+import {
+  createFormComponent,
+  findDOMNode,
+  Simulate,
+  setProps
+} from "./test_utils";
+import Form from "../src";
+import { View } from "react-native";
 
 describe("Validation", () => {
   describe("validate.isValid()", () => {
@@ -416,13 +423,15 @@ describe("Validation", () => {
         });
 
         it("should validate a required field", () => {
-          expect(comp.state.errors).to.have.lengthOf(1);
-          expect(comp.state.errors[0].message).eql("is a required property");
+          expect(node.instance.state.errors).to.have.lengthOf(1);
+          expect(node.instance.state.errors[0].message).eql("is a required property");
         });
 
         it("should render errors", () => {
-          expect(node.querySelectorAll(".errors li")).to.have.lengthOf(1);
-          expect(node.querySelector(".errors li").textContent).eql(
+          const flatListNode = findDOMNode(node.querySelectorAll("flat-list")[0], false);
+          const errorTextNodes = flatListNode.querySelectorAll("text");
+          expect(errorTextNodes).to.have.lengthOf(1);
+          expect(errorTextNodes[0].props.children).eql(
             ".foo is a required property"
           );
         });
@@ -456,8 +465,8 @@ describe("Validation", () => {
           const compInfo = createFormComponent({
             schema,
             formData: {
-              foo: "123456789",
-            },
+                foo: "123456789",
+              },
             onError,
           });
           comp = compInfo.comp;
@@ -467,18 +476,20 @@ describe("Validation", () => {
         });
 
         it("should validate a minLength field", () => {
-          expect(comp.state.errors).to.have.lengthOf(1);
-          expect(comp.state.errors[0].schemaPath).eql(
+          expect(node.instance.state.errors).to.have.lengthOf(1);
+          expect(node.instance.state.errors[0].schemaPath).eql(
             "#/properties/foo/minLength"
           );
-          expect(comp.state.errors[0].message).eql(
+          expect(node.instance.state.errors[0].message).eql(
             "should NOT be shorter than 10 characters"
           );
         });
 
         it("should render errors", () => {
-          expect(node.querySelectorAll(".errors li")).to.have.lengthOf(1);
-          expect(node.querySelector(".errors li").textContent).eql(
+          const flatListNode = findDOMNode(node.querySelectorAll("flat-list")[0], false);
+          const errorTextNodes = flatListNode.querySelectorAll("text");
+          expect(errorTextNodes).to.have.lengthOf(1);
+          expect(errorTextNodes[0].props.children).eql(
             ".foo should NOT be shorter than 10 characters"
           );
         });
@@ -513,9 +524,10 @@ describe("Validation", () => {
           validate,
           liveValidate: true,
         });
-        comp.UNSAFE_componentWillReceiveProps({ formData });
 
-        expect(comp.state.errorSchema).eql({
+        const { node } = setProps(comp, { formData });
+
+        expect(node.instance.state.errorSchema).eql({
           __errors: ["Invalid"],
         });
       });
@@ -595,9 +607,10 @@ describe("Validation", () => {
           validate,
           liveValidate: true,
         });
-        comp.UNSAFE_componentWillReceiveProps({ formData });
 
-        expect(comp.state.errorSchema).eql({
+        const { node } = setProps(comp, { formData });
+
+        expect(node.instance.state.errorSchema).eql({
           __errors: [],
           pass1: {
             __errors: [],
@@ -642,9 +655,9 @@ describe("Validation", () => {
           validate,
           liveValidate: true,
         });
-        comp.UNSAFE_componentWillReceiveProps({ formData });
+        const { node } = setProps(comp, { formData });
 
-        expect(comp.state.errorSchema).eql({
+        expect(node.instance.state.errorSchema).eql({
           0: {
             pass1: {
               __errors: [],
@@ -689,9 +702,9 @@ describe("Validation", () => {
           validate,
           liveValidate: true,
         });
-        comp.UNSAFE_componentWillReceiveProps({ formData });
+        const { node } = setProps(comp, { formData });
 
-        expect(comp.state.errorSchema).eql({
+        expect(node.instance.state.errorSchema).eql({
           0: { __errors: [] },
           1: { __errors: [] },
           2: { __errors: [] },
@@ -730,8 +743,8 @@ describe("Validation", () => {
         });
 
         it("should validate a required field", () => {
-          expect(comp.state.errors).to.have.lengthOf(1);
-          expect(comp.state.errors[0].message).eql("is a required property");
+          expect(node.instance.state.errors).to.have.lengthOf(1);
+          expect(node.instance.state.errors[0].message).eql("is a required property");
         });
 
         it("should not render error list if showErrorList prop true", () => {
@@ -768,13 +781,13 @@ describe("Validation", () => {
         uiSchema,
         formContext: { className },
       }) => (
-        <div>
-          <div className="CustomErrorList">{errors.length} custom</div>
-          <div className={"ErrorSchema"}>{errorSchema.__errors[0]}</div>
-          <div className={"Schema"}>{schema.type}</div>
-          <div className={"UiSchema"}>{uiSchema.foo}</div>
-          <div className={className} />
-        </div>
+        <View>
+          <View className="CustomErrorList">{errors.length} custom</View>
+          <View className={"ErrorSchema"}>{errorSchema.__errors[0]}</View>
+          <View className={"Schema"}>{schema.type}</View>
+          <View className={"UiSchema"}>{uiSchema.foo}</View>
+          <View className={className} />
+        </View>
       );
 
       it("should use CustomErrorList", () => {
@@ -786,19 +799,20 @@ describe("Validation", () => {
           ErrorList: CustomErrorList,
           formContext: { className: "foo" },
         });
-        expect(node.querySelectorAll(".CustomErrorList")).to.have.lengthOf(1);
-        expect(node.querySelector(".CustomErrorList").textContent).eql(
+
+        expect(node.querySelectorAllByClassName("CustomErrorList")).to.have.lengthOf(1);
+        expect(node.querySelectorByClassName("CustomErrorList").props.children.join("")).eql(
           "1 custom"
         );
-        expect(node.querySelectorAll(".ErrorSchema")).to.have.lengthOf(1);
-        expect(node.querySelector(".ErrorSchema").textContent).eql(
+        expect(node.querySelectorAllByClassName("ErrorSchema")).to.have.lengthOf(1);
+        expect(node.querySelectorByClassName("ErrorSchema").props.children).eql(
           "should be string"
         );
-        expect(node.querySelectorAll(".Schema")).to.have.lengthOf(1);
-        expect(node.querySelector(".Schema").textContent).eql("string");
-        expect(node.querySelectorAll(".UiSchema")).to.have.lengthOf(1);
-        expect(node.querySelector(".UiSchema").textContent).eql("bar");
-        expect(node.querySelectorAll(".foo")).to.have.lengthOf(1);
+        expect(node.querySelectorAllByClassName("Schema")).to.have.lengthOf(1);
+        expect(node.querySelectorByClassName("Schema").props.children).eql("string");
+        expect(node.querySelectorAllByClassName("UiSchema")).to.have.lengthOf(1);
+        expect(node.querySelectorByClassName("UiSchema").props.children).eql("bar");
+        expect(node.querySelectorAllByClassName("foo")).to.have.lengthOf(1);
       });
     });
     describe("Custom meta schema", () => {
@@ -843,14 +857,18 @@ describe("Validation", () => {
         node = withMetaSchema.node;
       });
       it("should be used to validate schema", () => {
-        expect(node.querySelectorAll(".errors li")).to.have.lengthOf(1);
-        expect(comp.state.errors).to.have.lengthOf(1);
-        expect(comp.state.errors[0].message).eql(`should match pattern "\\d+"`);
+        let flatListNode = findDOMNode(node.querySelectorAll("flat-list")[0], false);
+        let errorTextNodes = flatListNode.querySelectorAll("text");
+        expect(errorTextNodes).to.have.lengthOf(1);
+        expect(node.instance.state.errors).to.have.lengthOf(1);
+        expect(errorTextNodes[0].props.children).to.contain(`should match pattern "\\d+"`);
+
         Simulate.change(node.querySelector("input"), {
           target: { value: "1234" },
         });
-        expect(node.querySelectorAll(".errors li")).to.have.lengthOf(0);
-        expect(comp.state.errors).to.have.lengthOf(0);
+
+        // expect(flatListNode.querySelectorAll("text")).to.have.lengthOf(0);
+        expect(node.instance.state.errors).to.have.lengthOf(0);
       });
     });
   });

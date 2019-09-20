@@ -1,5 +1,8 @@
-# Order to test:
-- withTheme_test.js
+# Next to fix tests:
+- FormContext_test.js
+- ArrayFieldTemplate_test.js
+- BooleanField_test.js
+- NumberField_test.js
 
 Done:
 - [ ] ArrayFieldTemplate_test.js
@@ -13,7 +16,7 @@ Done:
 - [ ] NumberField_test.js
 - [X] ObjectFieldTemplate_test.js
 - [ ] ObjectField_test.js
-- [ ] SchemaField_test.js
+- [X] SchemaField_test.js
 - [ ] StringField_test.js
 - [X] TitleField_test.js
 - [ ] anyOf_test.js
@@ -22,5 +25,5 @@ Done:
 - [ ] performance_test.js
 - [ ] uiSchema_test.js
 - [X] utils_test.js
-- [ ] validate_test.js
-- [ ] withTheme_test.js
+- [X] validate_test.js
+- [X] withTheme_test.js
