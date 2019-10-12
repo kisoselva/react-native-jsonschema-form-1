@@ -1,9 +1,7 @@
 import {
-  Button,
   FlatList,
   Picker,
   Text,
-  TextInput,
   View
 } from "react-native";
 import Form from "../src/components/Form";
@@ -11,6 +9,7 @@ import { Label } from "../src/components/fields/SchemaField";
 import { BaseInput } from "../src/components/widgets/BaseInput";
 import CheckBox from '@react-native-community/checkbox';
 import RadioForm, { RadioButtonInput, RadioButtonLabel } from "react-native-simple-radio-button";
+import { Button, TextInput } from "react-native-paper";
 
 const map = {
   button: Button,

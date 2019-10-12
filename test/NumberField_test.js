@@ -118,7 +118,7 @@ describe("NumberField", () => {
       },
     ];
     for (let uiSchema of uiSchemas) {
-      it("should render a string field with a label", () => {
+      it("should render a string field with a label 2", () => {
         const { node } = createFormComponent({
           schema: {
             type: "number",
@@ -127,8 +127,8 @@ describe("NumberField", () => {
           uiSchema,
         });
 
-        const fieldNode = findDOMNode(node.querySelectorByClassName("field"), false);
-        expect(fieldNode.querySelector("text").props.children[0]).eql("foo");
+        const fieldNode = findDOMNode(node.querySelector("input"), false);
+        expect(fieldNode.props.label).eql("foo");
       });
 
       it("should render a string field with a description", () => {
@@ -479,8 +479,8 @@ describe("NumberField", () => {
       expect(selects[0].props.selectedValue).eql("");
 
       const options = selects[0].children[0].props.children;
-      expect(options.length).eql(2);
-      expect(options[0].props.label).eql("");
+      expect(options.length).eql(1);
+      expect(options[0].props.label).eql("0");
     });
 
     it("should render a select element without a blank option, if a default value is set.", () => {
@@ -503,8 +503,8 @@ describe("NumberField", () => {
       expect(selects[0].props.selectedValue).eql(2);
 
       const options = selects[0].children[0].props.children;
-      expect(options.length).eql(2);
-      expect(options[1].props.label).eql("2");
+      expect(options.length).eql(1);
+      expect(options[0].props.label).eql("2");
     });
 
     it("should render a select element without a blank option, if the default value is 0.", () => {
@@ -527,8 +527,8 @@ describe("NumberField", () => {
       expect(selects[0].props.selectedValue).eql(0);
 
       const options = selects[0].children[0].props.children;
-      expect(options.length).eql(2);
-      expect(options[1].props.label).eql("0");
+      expect(options.length).eql(1);
+      expect(options[0].props.label).eql("0");
     });
   });
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { TextInput } from "react-native";
+import { TextInput } from "react-native-paper";
 
 function TextareaWidget(props) {
   const {
@@ -17,6 +17,7 @@ function TextareaWidget(props) {
     onBlur,
     onFocus,
     style,
+    label,
     ...textareaProps
   } = props;
   const _onChange = (value) => {
@@ -26,7 +27,6 @@ function TextareaWidget(props) {
     <TextInput
       id={id}
       multiline={true}
-      className="form-control"
       value={typeof value === "undefined" ? "" : value}
       placeholder={placeholder}
       required={required}
@@ -34,7 +34,9 @@ function TextareaWidget(props) {
       editable={!readonly}
       autoFocus={autofocus}
       numberOfLines={options.rows}
+      mode={style && style.mode ? style.mode : "outlined"}
       style={style.TextInput}
+      label={label}
       {...textareaProps}
       onChangeText={_onChange}
       onEndEditing={onBlur && (event => onBlur(inputProps.id, e.nativeEvent.text))}
@@ -53,6 +55,7 @@ if (process.env.NODE_ENV !== "production") {
     schema: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
+    label: PropTypes.string,
     options: PropTypes.shape({
       rows: PropTypes.number,
     }),

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { TextInput } from 'react-native';
+import { TextInput } from "react-native-paper";
 
 function BaseInput(props) {
   // Note: since React 15.2.0 we can't forward unknown element attributes, so we
@@ -24,6 +24,7 @@ function BaseInput(props) {
     registry,
     rawErrors,
     style,
+    label,
     ...inputProps
   } = props;
 
@@ -63,12 +64,13 @@ function BaseInput(props) {
 
   return (
     <TextInput
-      className="form-control"
       editable={!readonly}
       contextMenuHidden={disabled}
       autoFocus={autofocus}
       value={value == null ? "" : value}
+      mode={style && style.mode ? style.mode : "outlined"}
       style={style}
+      label={label}
       {...inputProps}
       onChangeText={value => onChange(value === "" ? options.emptyValue : value)}
       onEndEditing={onBlur}
@@ -89,6 +91,7 @@ if (process.env.NODE_ENV !== "production") {
   BaseInput.propTypes = {
     id: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
+    label: PropTypes.string,
     value: PropTypes.any,
     required: PropTypes.bool,
     disabled: PropTypes.bool,

@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import _pick from "lodash/pick";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
-import { Button, View } from "react-native";
+import { View } from "react-native";
+import { Button } from "react-native-paper";
 
 import { default as DefaultErrorList } from "./ErrorList";
 import {
@@ -369,10 +370,10 @@ export default class Form extends Component {
           children
         ) : (
           <Button
+            mode="contained"
             onPress={(formData) => this.onSubmit(formData)}
-            style={style.Button || {margin: 15}}
-            title={submitTitle || 'Submit'}
-          />
+            style={style.Button}
+          >{submitTitle || 'Submit'}</Button>
         )}
       </View>
     );

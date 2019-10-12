@@ -2,7 +2,8 @@ import { expect } from "chai";
 import sinon from "sinon";
 import React from "react";
 // import { renderIntoDocument, Simulate } from "react-dom/test-utils";
-import { Button, View } from "react-native";
+import { View } from "react-native";
+import { Button } from "react-native-paper";
 import renderer from "react-test-renderer";
 
 import Form from '../src';
@@ -44,8 +45,8 @@ describeRepeated("Form common", createFormComponent => {
       const props = { schema: {} };
       const comp = renderIntoDocument(
         <Form {...props}>
-          <Button title="Submit" />
-          <Button title="Another submit" />
+          <Button>Submit</Button>
+          <Button>Another submit</Button>
         </Form>
       );
       const node = findDOMNode(comp);
@@ -62,8 +63,8 @@ describeRepeated("Form common", createFormComponent => {
     function createComponent() {
       comp = renderIntoDocument(
         <Form schema={schema} onChange={onChangeProp} formData={formData}>
-          <Button title="Submit" />
-          <Button title="Another submit" />
+          <Button>Submit</Button>
+          <Button>Another submit</Button>
         </Form>
       );
     }

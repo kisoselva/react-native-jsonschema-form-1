@@ -61,9 +61,9 @@ export function findDOMNode(componentOrNode, isComponent = true) {
     node.tagName = null;
   }
 
-  node.querySelector = tag => node.findByType(tagToComponentMap[tag]);
+  node.querySelector = tag => node.findByType(getComponentByTag(tag));
   
-  node.querySelectorAll = tag => node.findAllByType(tagToComponentMap[tag]);
+  node.querySelectorAll = tag => node.findAllByType(getComponentByTag(tag));
 
   node.querySelectorAllExcludeFunctions = tag => node.querySelectorAll(tag)
     .filter(instance => !_.isFunction(instance.type));
@@ -125,4 +125,8 @@ function _findAll(root, predicate, options) {
   });
 
   return results;
+}
+
+function getComponentByTag(tag) {
+  return tagToComponentMap[tag] ? tagToComponentMap[tag] : tag; 
 }

@@ -398,7 +398,7 @@ describe("BooleanField", () => {
       uiSchema: { "ui:widget": "select" },
     });
 
-    expect(getSelectLabels(node)).eql(["", "Yes", "No"]);
+    expect(getSelectLabels(node)).eql(["Yes", "No"]);
   });
 
   // Select widget does not have focus event

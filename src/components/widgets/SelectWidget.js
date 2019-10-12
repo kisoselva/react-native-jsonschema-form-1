@@ -66,10 +66,7 @@ function SelectWidget(props) {
     placeholder,
     style = {},
   } = props;
-  let { enumOptions, enumDisabled } = options;
-  if(!required) {
-    enumOptions = [{label: "", value: ""}, ...enumOptions];
-  }
+  const { enumOptions, enumDisabled } = options;
   const emptyValue = multiple ? [] : "";
   return (
     <Picker

@@ -79,11 +79,10 @@ function LabelInput(props) {
   const { id, label, onChange, style } = props;
   return (
     <BaseInput
-      className="form-control"
       type="text"
       id={id}
       onBlur={e => onChange(e.nativeEvent.text)}
-      value={label}
+      label={label}
       style={style.TextInput}
     />
   );
