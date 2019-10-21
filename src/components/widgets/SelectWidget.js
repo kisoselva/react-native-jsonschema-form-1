@@ -64,7 +64,7 @@ function SelectWidget(props) {
     onBlur,
     onFocus,
     placeholder,
-    style = {},
+    style,
   } = props;
   const { enumOptions, enumDisabled } = options;
   const emptyValue = multiple ? [] : "";

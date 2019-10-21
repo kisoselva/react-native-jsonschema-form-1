@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function EmailWidget(props) {
   const { BaseInput } = props.registry.widgets;
-  const { style = {}, ...emailProps } = props;
+  const { style , ...emailProps } = props;
   return (
     <BaseInput
       type="email"

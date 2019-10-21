@@ -760,7 +760,7 @@ function withExactlyOneSubschema(
   );
 }
 
-function mergeSchemas(schema1, schema2) {
+export function mergeSchemas(schema1, schema2) {
   return mergeObjects(schema1, schema2, true);
 }
 

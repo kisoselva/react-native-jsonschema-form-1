@@ -129,6 +129,7 @@ export default class Form extends Component {
           uiSchema={uiSchema}
           formContext={formContext}
           style={style.ErrorList}
+          textStyle={style.ErrorListText}
         />
       );
     }

@@ -9,8 +9,8 @@ function TitleField(props) {
   const { id, title, required, style } = props;
   return (
     <Text id={id} style={style}>
-      {title}
-      {required && <Text className="required" style={style && style.required}>{REQUIRED_FIELD_SYMBOL}</Text>}
+      {/* {title} */}
+      {/* {required && <Text className="required" style={style && style.required}>{REQUIRED_FIELD_SYMBOL}</Text>} */}
     </Text>
   );
 }

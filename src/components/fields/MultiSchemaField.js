@@ -130,7 +130,7 @@ class AnyOfField extends Component {
       label: option.title || `Option ${index + 1}`,
       value: index,
     }));
-
+    
     return (
       <View className="panel panel-default panel-body">
         <View className="form-group">

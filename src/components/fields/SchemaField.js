@@ -70,7 +70,7 @@ export function Label(props) {
   return (
     <Text className="control-label" htmlFor={id} style={style && style.Label}>
       {label}
-      {required && <Text className="required" style={style && style.Label && style.Label.required}>{REQUIRED_FIELD_SYMBOL}</Text>}
+      {/* {required && <Text className="required" style={style && style.Label && style.Label.required}>{REQUIRED_FIELD_SYMBOL}</Text>} */}
     </Text>
   );
 }
@@ -89,18 +89,18 @@ function LabelInput(props) {
 }
 
 function Help(props) {
-  const { help, style = {} } = props;
+  const { help, style } = props;
   if (!help) {
     return null;
   }
   if (typeof help === "string") {
-    return <Text className="help-block" style={style.Help}>{help}</Text>;
+    return <Text className="help-block" style={style}>{help}</Text>;
   }
-  return <View className="help-block"><Text style={style.Help}>{help}</Text></View>;
+  return <View className="help-block"><Text style={style}>{help}</Text></View>;
 }
 
 function ErrorList(props) {
-  const { errors = [], style = {} } = props;
+  const { errors = [], style, textStyle } = props;
   if (errors.length === 0) {
     return null;
   }
@@ -109,9 +109,9 @@ function ErrorList(props) {
       <FlatList
         data={errors.filter(elem => !!elem).map((error, index) => ({key: error}))}
         renderItem={({item}) =>
-          <Text className="text-danger">{item.key}</Text>
+          <Text style={textStyle}>{item.key}</Text>
         }
-        style={style.ErrorList}
+        style={style}
       />
     </View>
   );
@@ -338,9 +338,9 @@ function SchemaFieldRender(props) {
       />
     ),
     rawDescription: description,
-    help: <Help help={help} />,
+    help: <Help help={help} style={style.Help} />,
     rawHelp: typeof help === "string" ? help : undefined,
-    errors: <ErrorList errors={errors} style={style.ErrorList} />,
+    errors: <ErrorList errors={errors} style={style.ErrorList} textStyle={style.ErrorListText} />,
     rawErrors: errors,
     id,
     label,
@@ -386,6 +386,7 @@ function SchemaFieldRender(props) {
           safeRenderCompletion={props.safeRenderCompletion}
           schema={schema}
           uiSchema={uiSchema}
+          style={style}
         />
       )}
 
@@ -405,6 +406,7 @@ function SchemaFieldRender(props) {
           safeRenderCompletion={props.safeRenderCompletion}
           schema={schema}
           uiSchema={uiSchema}
+          style={style}
         />
       )}
     </FieldTemplate>
